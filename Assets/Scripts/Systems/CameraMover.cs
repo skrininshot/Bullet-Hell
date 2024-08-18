@@ -27,5 +27,6 @@ public class CameraMover : IInitializable, IDisposable
         _camera.transform.SetParent(transform);
         _camera.transform.DOKill(true);
         _camera.transform.DOLocalMove(Vector3.zero, speed);
+        _camera.transform.DOLocalRotate(transform.localEulerAngles, speed);
     }
 }

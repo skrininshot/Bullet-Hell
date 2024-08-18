@@ -804,6 +804,42 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 294576507}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &334953984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334953985}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &334953985
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334953984}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 943369791}
+  m_Father: {fileID: 966257459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &335781970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3007,7 +3043,7 @@ GameObject:
   - component: {fileID: 943369793}
   - component: {fileID: 943369792}
   m_Layer: 5
-  m_Name: Crosshair
+  m_Name: AimingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3025,7 +3061,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 966257459}
+  m_Father: {fileID: 334953985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3164,7 +3200,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 943369791}
+  - {fileID: 334953985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4184,14 +4220,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ca4a1aa41e40f4f8310abb7c9f1eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnClick:
-    m_PersistentCalls:
-      m_Calls: []
   _axes: 0
   _minimumX: -360
   _maximumX: 360
   _minimumY: -60
   _maximumY: 60
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1318974921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7384,6 +7420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 643350695}
   _mouseAiming: {fileID: 1314672870}
+  _aimingUI: {fileID: 943369790}
   _bulletInstance: {fileID: -8114327443325271631, guid: 7af64eeecf5fb814e8a31075afd1e3c2,
     type: 3}
   _bulletSpawnPoint: {fileID: 1177783049}

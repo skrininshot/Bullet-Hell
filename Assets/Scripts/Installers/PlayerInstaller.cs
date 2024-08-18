@@ -5,6 +5,7 @@ public class PlayerInstaller : MonoInstaller
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private MouseAiming _mouseAiming;
+    [SerializeField] private GameObject _aimingUI;
     [SerializeField] private Bullet _bulletInstance;
     [SerializeField] private Transform _bulletSpawnPoint;
 
@@ -20,9 +21,11 @@ public class PlayerInstaller : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<CameraMover>().AsSingle().WithArguments(_camera);
     }
+
     private void InstallMouseAiming()
     {
         Container.BindInstance(_mouseAiming).AsSingle();
+        Container.BindInstance(_aimingUI).WithId("AimingUI").AsSingle();
     }
 
     private void InstallBullet()

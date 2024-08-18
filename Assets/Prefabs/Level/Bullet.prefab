@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4549297279971755127}
   - component: {fileID: 7375317141527175585}
   - component: {fileID: -8114327443325271631}
+  - component: {fileID: 6845378704636965987}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -154,3 +155,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _cameraPoint: {fileID: 8873106530888845375}
+--- !u!114 &6845378704636965987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700358624656849476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7345e546249a01a4db90c694aec1c527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axes: 0
+  _minimumX: -360
+  _maximumX: 360
+  _minimumY: -60
+  _maximumY: 60
