@@ -18,9 +18,14 @@ public class MouseAiming : MouseRotate
 
     protected override void Update()
     {
-        float sensitivity = _controlSettings.Sensitivity * (_camera.IsZoomed ? _controlSettings.AimSensitivity : 1f );
+        base.Update();
+        HandleMouseButtons();
+    }
 
-        HandleMouseInput(sensitivity);
+    protected override void LateUpdate()
+    {
+        float sensitivity = _controlSettings.Sensitivity * (_camera.IsZoomed ? _controlSettings.AimSensitivity : 1f);
+        Rotate(sensitivity);
     }
 
     private void OnDisable()
@@ -28,14 +33,12 @@ public class MouseAiming : MouseRotate
         _camera.ZoomOut();
     }
 
-    protected override void HandleMouseInput(float sensitivity)
+    private void HandleMouseButtons()
     {
-        base.HandleMouseInput(sensitivity);
-
         bool lmbClicked = Input.GetMouseButtonDown(0);
         bool rmbClicked = Input.GetMouseButton(1);
 
-        if (lmbClicked) 
+        if (lmbClicked)
         {
             OnClick?.Invoke();
 
@@ -46,6 +49,6 @@ public class MouseAiming : MouseRotate
             if (rmbClicked)
                 _camera.ZoomIn(_aimZoomSize);
             else
-                _camera.ZoomOut();  
+                _camera.ZoomOut();
     }
 }

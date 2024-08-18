@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f9e7115540d17448770c80b30e9804, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  UI:
+    Game:
+      PauseSystem:
+        ShowHideSpeed: 0.2
   Player:
     Control:
       Sensitivity: 1
@@ -27,3 +31,5 @@ MonoBehaviour:
   Bullet:
     DestroyTime: 5
     Speed: 5
+  TimeShifter:
+    TimeShiftDuration: 0.1

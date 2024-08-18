@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [HideInInspector] public UnityEvent<bool> OnDestroy = new();
     public Transform CameraPoint => _cameraPoint;
 
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _cameraPoint;
 
     private float _destroyTime;
@@ -23,12 +24,12 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(DestroyTimer(_destroyTime));
+        StartCoroutine(DestroyTimer(_destroyTime)); 
     }
 
     private void Update()
     {
-        transform.position += _speed * Time.deltaTime * transform.forward;
+        _rigidbody.velocity = _speed * transform.forward;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -155,6 +155,7 @@ MonoBehaviour:
   OnDestroy:
     m_PersistentCalls:
       m_Calls: []
+  _rigidbody: {fileID: -8778298172359414117}
   _cameraPoint: {fileID: 8873106530888845375}
 --- !u!114 &6845378704636965987
 MonoBehaviour:
