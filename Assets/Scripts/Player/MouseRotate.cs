@@ -14,7 +14,7 @@ public class MouseRotate : MonoBehaviour
 
     private float rotationY = 0F;
 
-    private GameSettings.PlayerSetttings.ControlSettings _controlSettings;
+    protected GameSettings.PlayerSetttings.ControlSettings _controlSettings;
 
     [Inject]
     private void Construct(GameSettings gameSettings)
@@ -22,12 +22,22 @@ public class MouseRotate : MonoBehaviour
         _controlSettings = gameSettings.Player.Control;
     }
 
+    private void Start()
+    {
+        rotationY = -transform.localEulerAngles.x;
+    }
+
     protected virtual void Update()
+    {
+        HandleMouseInput(_controlSettings.Sensitivity);
+    }
+
+    protected virtual void HandleMouseInput(float sensitivity)
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        rotationY += mouseY * _controlSettings.Sensitivity;
+        rotationY += mouseY * sensitivity;
         rotationY = Mathf.Clamp(rotationY, _minimumY, _maximumY);
 
         if (_axes == RotationAxes.MouseXAndY)

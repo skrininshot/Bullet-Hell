@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings")]
 public class GameSettings : ScriptableObject
 {
-    public Bullet.Settings Bullet;
     public PlayerSetttings Player;
+    public CameraZoom.Settings CameraZoom;
+    public Bullet.Settings Bullet;
 
     [Serializable]
     public class PlayerSetttings
@@ -24,6 +25,7 @@ public class GameSettings : ScriptableObject
         public class ControlSettings
         {
             public float Sensitivity = 1f;
+            public float AimSensitivity = 0.5f;
         }
     }
 }

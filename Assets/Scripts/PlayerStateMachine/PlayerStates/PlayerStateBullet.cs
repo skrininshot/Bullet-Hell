@@ -24,8 +24,7 @@ public class PlayerStateBullet : State
     public override void Start()
     {
         _bullet = _bulletFactory.Create();
-        _bullet.transform.position = _bulletSpawnPoint.position;
-        _bullet.transform.rotation = _bulletSpawnPoint.rotation;
+        _bullet.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         _bullet.OnDestroy.AddListener(BulletDestroy);
 
         _cameraMover.SetTransform(_bullet.CameraPoint, _settings.CameraMoveToBulletSpeed);

@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f9e7115540d17448770c80b30e9804, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  Bullet:
-    DestroyTime: 5
-    Speed: 5
   Player:
     Control:
       Sensitivity: 1
+      AimSensitivity: 0.5
     PlayerStates:
       BulletState:
         CameraMoveToBulletSpeed: 0.1
       AimingState:
         CameraMoveToAimingSpeed: 0.1
+  CameraZoom:
+    ZoomInDuration: 0.2
+    ZoomOutDuration: 0.2
+  Bullet:
+    DestroyTime: 5
+    Speed: 5

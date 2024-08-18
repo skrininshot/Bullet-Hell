@@ -19,7 +19,9 @@ public class PlayerInstaller : MonoInstaller
 
     private void InstallCamera()
     {
-        Container.BindInterfacesAndSelfTo<CameraMover>().AsSingle().WithArguments(_camera);
+        Container.BindInstance(_camera).WithId("MainCamera").AsSingle();
+        Container.BindInterfacesAndSelfTo<CameraZoom>().AsSingle().WithArguments(_camera);
+        Container.Bind<CameraMover>().AsSingle().WithArguments(_camera);
     }
 
     private void InstallMouseAiming()
