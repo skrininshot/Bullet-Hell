@@ -6,32 +6,28 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
 {
     public bool IsPaused { get; private set; }
 
-    private readonly PauseSystemView _pauseSystemView;
+    private readonly PauseView _pauseView;
     private readonly SceneTransition _sceneTransition;
     private readonly TimeShifter _timeShifter;
 
-    public PauseSystem(PauseSystemView pauseSystemView, SceneTransition sceneTransition, TimeShifter timeShifter)
+    public PauseSystem(PauseView pauseSystemView, SceneTransition sceneTransition, TimeShifter timeShifter)
     {
-        _pauseSystemView = pauseSystemView;
+        _pauseView = pauseSystemView;
         _sceneTransition = sceneTransition;
         _timeShifter = timeShifter;
     }
 
     public void Initialize()
     {
-        _pauseSystemView.ContinueButton.onClick.AddListener(Pause);
-        _pauseSystemView.MenuButton.onClick.AddListener(_sceneTransition.TransitionToMenu);
+        _pauseView.ContinueButton.onClick.AddListener(Pause);
+        _pauseView.MenuButton.onClick.AddListener(_sceneTransition.TransitionToMenu);
     }
 
     private void Pause()
     {
         IsPaused = !IsPaused;
-        _pauseSystemView.Pause(IsPaused);
-
-        //if (IsPaused)
-            //_timeShifter.PauseTime(); - pause
-        //else
-            //_timeShifter.ResetTimeScale(); - unpause
+        _pauseView.Pause(IsPaused);
+        _timeShifter.SetIsPaused(IsPaused);
     }
 
     public void Tick()
@@ -42,7 +38,7 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
 
     public void Dispose()
     {
-        _pauseSystemView.ContinueButton.onClick.RemoveListener(Pause);
-        _pauseSystemView.MenuButton.onClick.RemoveListener(_sceneTransition.TransitionToMenu);
+        _pauseView.ContinueButton.onClick.RemoveListener(Pause);
+        _pauseView.MenuButton.onClick.RemoveListener(_sceneTransition.TransitionToMenu);
     }
 }

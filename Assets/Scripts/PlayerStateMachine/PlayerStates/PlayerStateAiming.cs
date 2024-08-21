@@ -7,22 +7,22 @@ public class PlayerStateAiming : State
     private Settings _settings;
     private PlayerStateMachine _playerStateMachine;
     private MouseAiming _mouseAiming;
-    private GameObject _aimingUI;
+    private AimingView _aimingView;
     private CameraMover _cameraMover;
 
     public PlayerStateAiming (GameSettings settings, PlayerStateMachine playerStateMachine, 
-        CameraMover cameraMover, MouseAiming mouseAiming, [Inject(Id ="AimingUI")] GameObject aimingUI)
+        CameraMover cameraMover, MouseAiming mouseAiming, AimingView aimingUI)
     {
         _settings = settings.Player.PlayerStates.AimingState;
         _playerStateMachine = playerStateMachine;
         _cameraMover = cameraMover;
         _mouseAiming = mouseAiming;
-        _aimingUI = aimingUI;
+        _aimingView = aimingUI;
     }
 
     public override void Start()
     {
-        _aimingUI.SetActive(true);
+        _aimingView.gameObject.SetActive(true);
         _mouseAiming.enabled = true;
         _mouseAiming.OnClick.AddListener(MouseClick);
         _cameraMover.SetTransform(_mouseAiming.transform, _settings.CameraMoveToAimingSpeed);
@@ -30,7 +30,7 @@ public class PlayerStateAiming : State
 
     public override void Dispose()
     {
-        _aimingUI.SetActive(false);
+        _aimingView.gameObject.SetActive(false);
         _mouseAiming.enabled = false;
         _mouseAiming.OnClick.RemoveListener(MouseClick);
     }

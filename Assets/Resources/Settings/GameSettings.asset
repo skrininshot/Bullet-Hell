@@ -15,7 +15,8 @@ MonoBehaviour:
   UI:
     Game:
       PauseSystem:
-        ShowHideSpeed: 0.2
+        AppearingDuration: 0.2
+        DisappearingDuration: 0.2
   Player:
     Control:
       Sensitivity: 1
@@ -23,6 +24,7 @@ MonoBehaviour:
     PlayerStates:
       BulletState:
         CameraMoveToBulletSpeed: 0.1
+        TimeShiftValue: 1
       AimingState:
         CameraMoveToAimingSpeed: 0.1
   CameraZoom:
@@ -30,6 +32,7 @@ MonoBehaviour:
     ZoomOutDuration: 0.2
   Bullet:
     DestroyTime: 5
-    Speed: 5
+    Speed: 50
   TimeShifter:
-    TimeShiftDuration: 0.1
+    DefaultTimeScale: 1
+    TimeShiftDuration: 1

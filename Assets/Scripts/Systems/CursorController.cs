@@ -5,7 +5,7 @@ using Zenject;
 
 public class CursorController : IInitializable, IDisposable
 {
-    private List<int> _subscribers = new ();
+    private List<object> _subscribers = new ();
 
     public void Initialize()
     {
@@ -17,15 +17,15 @@ public class CursorController : IInitializable, IDisposable
         HandleCursor();
     }
 
-    public void AddSubscriber(int hashCode)
+    public void AddSubscriber(object subscriber)
     {
-        _subscribers.Add(hashCode);
+        _subscribers.Add(subscriber);
         HandleCursor();
     }
 
-    public void RemoveSubscriber(int hashCode)
+    public void RemoveSubscriber(object subscriber)
     {
-        _subscribers.Remove(hashCode);
+        _subscribers.Remove(subscriber);
         HandleCursor();
     }
 

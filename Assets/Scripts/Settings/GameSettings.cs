@@ -39,7 +39,7 @@ public class GameSettings : ScriptableObject
         [Serializable]
         public class GameUISettings
         {
-            public PauseSystemView.Settings PauseSystem;
+            public PauseView.Settings PauseView;
         }
     }
 }
