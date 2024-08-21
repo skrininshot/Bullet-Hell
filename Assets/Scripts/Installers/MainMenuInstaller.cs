@@ -8,6 +8,6 @@ public class MainMenuInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<MainMenuHandler>().AsSingle().WithArguments(_startButton).NonLazy();
+        Container.BindInterfacesAndSelfTo<MainMenuController>().AsSingle().WithArguments(_startButton).NonLazy();
     }
 }

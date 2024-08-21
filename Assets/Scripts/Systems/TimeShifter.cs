@@ -20,10 +20,11 @@ public class TimeShifter : IInitializable, IDisposable
         if (_isPaused) return;
 
         value = Mathf.Clamp01(value);
-        var startTimescale = Time.timeScale;
 
         if (_timeShiftTween.IsActive())
-            _timeShiftTween.Kill(true);
+            _timeShiftTween.Kill();
+
+        var startTimescale = Time.timeScale;
 
         _timeShiftTween = DOVirtual.Float(startTimescale, value, _settings.TimeShiftDuration, f =>
         {    
@@ -35,6 +36,8 @@ public class TimeShifter : IInitializable, IDisposable
     {
         Time.timeScale = value;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        Debug.Log($"Time.timeScale: {Time.timeScale}");
     }
 
     public void SetIsPaused(bool value)
@@ -51,14 +54,20 @@ public class TimeShifter : IInitializable, IDisposable
         }
         else
         {
+            SetTimeScale(_timeScaleBeforePause);
+
             if (_timeShiftTween.IsActive())
                 _timeShiftTween.Play();
-
-            SetTimeScale(_timeScaleBeforePause);
         }
     }
- 
-    public void Reset() => SetTimeScale(_settings.DefaultTimeScale);
+
+    public void Reset()
+    {
+        if (_timeShiftTween.IsActive())
+            _timeShiftTween.Kill();
+
+        SetTimeScale(_settings.DefaultTimeScale);
+    }
 
     public void Initialize()
     {

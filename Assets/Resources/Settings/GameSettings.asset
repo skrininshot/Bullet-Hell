@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI:
     Game:
-      PauseSystem:
+      PauseView:
         AppearingDuration: 0.2
-        DisappearingDuration: 0.2
+        DisappearingDuration: 0.1
   Player:
     Control:
       Sensitivity: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
     PlayerStates:
       BulletState:
         CameraMoveToBulletSpeed: 0.1
-        TimeShiftValue: 1
+        TimeShiftValue: 0.05
       AimingState:
         CameraMoveToAimingSpeed: 0.1
   CameraZoom:
@@ -35,4 +35,4 @@ MonoBehaviour:
     Speed: 50
   TimeShifter:
     DefaultTimeScale: 1
-    TimeShiftDuration: 1
+    TimeShiftDuration: 0.5

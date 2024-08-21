@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Zenject;
 
-public class MainMenuHandler : IInitializable, IDisposable
+public class MainMenuController : IInitializable, IDisposable
 {
     private readonly SceneTransition _sceneTransition;
     private readonly Button _startButton;
@@ -10,7 +10,7 @@ public class MainMenuHandler : IInitializable, IDisposable
 
     private int _selectedLevelBuildIndex = 2;
 
-    public MainMenuHandler(SceneTransition sceneTransition, Button startButton, CursorController cursorController) 
+    public MainMenuController(SceneTransition sceneTransition, Button startButton, CursorController cursorController) 
     {
         _sceneTransition = sceneTransition;
         _startButton = startButton;

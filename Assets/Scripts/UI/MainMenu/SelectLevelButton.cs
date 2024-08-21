@@ -6,11 +6,11 @@ public class SelectLevelButton : MonoBehaviour
 {
     [SerializeField] private int _sceneBuildIndex;
 
-    private MainMenuHandler _mainMenuHandler;
+    private MainMenuController _mainMenuHandler;
     private Button _button;
 
     [Inject]
-    private void Construct(MainMenuHandler mainMenuHandler)
+    private void Construct(MainMenuController mainMenuHandler)
     {
         _mainMenuHandler = mainMenuHandler;
     }
