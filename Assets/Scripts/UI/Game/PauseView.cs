@@ -46,7 +46,7 @@ public class PauseView : MonoBehaviour
                 .DOLocalMoveX(_showX, _settings.AppearingDuration)
                 .SetUpdate(true);
 
-            _cursorController.AddSubscriber(this);
+            _cursorController.RegisterUser(this);
         }
         else
         {
@@ -54,7 +54,7 @@ public class PauseView : MonoBehaviour
                 .DOLocalMoveX(_hideX, _settings.DisappearingDuration)
                 .SetUpdate(true);
 
-            _cursorController.RemoveSubscriber(this);
+            _cursorController.UnregisterUser(this);
         }
     }
 

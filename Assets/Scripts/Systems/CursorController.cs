@@ -5,7 +5,7 @@ using Zenject;
 
 public class CursorController : IInitializable, IDisposable
 {
-    private List<object> _subscribers = new ();
+    private readonly List<object> _users = new ();
 
     public void Initialize()
     {
@@ -17,21 +17,21 @@ public class CursorController : IInitializable, IDisposable
         HandleCursor();
     }
 
-    public void AddSubscriber(object subscriber)
+    public void RegisterUser(object user)
     {
-        _subscribers.Add(subscriber);
+        _users.Add(user);
         HandleCursor();
     }
 
-    public void RemoveSubscriber(object subscriber)
+    public void UnregisterUser(object user)
     {
-        _subscribers.Remove(subscriber);
+        _users.Remove(user);
         HandleCursor();
     }
 
     private void HandleCursor()
     {
-        bool visible = (_subscribers.Count > 0);
+        bool visible = (_users.Count > 0);
 
         Cursor.visible = visible;
         Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;

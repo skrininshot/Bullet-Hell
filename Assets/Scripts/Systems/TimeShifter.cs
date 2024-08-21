@@ -22,6 +22,9 @@ public class TimeShifter : IInitializable, IDisposable
         value = Mathf.Clamp01(value);
         var startTimescale = Time.timeScale;
 
+        if (_timeShiftTween.IsActive())
+            _timeShiftTween.Kill(true);
+
         _timeShiftTween = DOVirtual.Float(startTimescale, value, _settings.TimeShiftDuration, f =>
         {    
             SetTimeScale(f);

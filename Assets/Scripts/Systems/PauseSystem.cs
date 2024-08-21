@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,7 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
     private readonly PauseView _pauseView;
     private readonly SceneTransition _sceneTransition;
     private readonly TimeShifter _timeShifter;
+    private readonly List<IPausable> _pausables = new ();
 
     public PauseSystem(PauseView pauseSystemView, SceneTransition sceneTransition, TimeShifter timeShifter)
     {
@@ -28,7 +30,18 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
         IsPaused = !IsPaused;
         _pauseView.Pause(IsPaused);
         _timeShifter.SetIsPaused(IsPaused);
+
+        if (IsPaused)
+            foreach (var pausable in _pausables)
+                pausable.Pause();
+        else
+            foreach (var pausable in _pausables)
+                pausable.Resume();
     }
+
+    public void RegisterPausable(IPausable obj) => _pausables.Add(obj);
+
+    public void UnregisterPausable(IPausable obj) => _pausables.Remove(obj);
 
     public void Tick()
     {

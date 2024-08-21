@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class MouseRotate : MonoBehaviour
+public class MouseRotate : MonoBehaviour, IPausable
 {
     [SerializeField] private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
     [SerializeField] private RotationAxes _axes = RotationAxes.MouseXAndY;
@@ -17,51 +17,65 @@ public class MouseRotate : MonoBehaviour
     private float _mouseY = 0f;
 
     protected GameSettings.PlayerSetttings.ControlSettings _controlSettings;
+    protected PauseSystem _pauseSystem;
+
+    protected bool _isPaused;
 
     [Inject]
-    private void Construct(GameSettings gameSettings)
+    private void Construct(GameSettings gameSettings, PauseSystem pauseSystem)
     {
         _controlSettings = gameSettings.Player.Control;
+        _pauseSystem = pauseSystem;
     }
 
     private void Start()
     {
         _rotationY = -transform.localEulerAngles.x;
+        _pauseSystem.RegisterPausable(this);
     }
 
-    protected virtual void Update()
+    private void OnDestroy()
     {
-        RotationInput();
+        _pauseSystem.UnregisterPausable(this);
     }
 
-    protected virtual void LateUpdate()
+    protected virtual void Update() => RotationInput(_controlSettings.Sensitivity);
+
+    protected virtual void LateUpdate() => Rotate();
+
+    protected void RotationInput(float sensitivity)
     {
-        Rotate(_controlSettings.Sensitivity);
+        if (_isPaused) return;
+
+        _mouseX = Input.GetAxis("Mouse X") * sensitivity;
+        _mouseY = Input.GetAxis("Mouse Y") * sensitivity;
     }
 
-    private void RotationInput()
+    private void Rotate()
     {
-        _mouseX = Input.GetAxis("Mouse X");
-        _mouseY = Input.GetAxis("Mouse Y");
-    }
+        if (_isPaused) return;
 
-    protected virtual void Rotate(float sensitivity)
-    {
-        _rotationY += _mouseY * sensitivity;
+        _rotationY += _mouseY;
         _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
 
         if (_axes == RotationAxes.MouseXAndY)
         {
-            float rotationX = transform.localEulerAngles.y + _mouseX * _controlSettings.Sensitivity;
+            float rotationX = transform.localEulerAngles.y + _mouseX;
             transform.localEulerAngles = new Vector3(-_rotationY, rotationX, 0);
         }
         else if (_axes == RotationAxes.MouseX)
-        {
-            transform.Rotate(0, _mouseX * _controlSettings.Sensitivity, 0);
-        }
+            transform.Rotate(0, _mouseX, 0);
         else
-        {
             transform.localEulerAngles = new Vector3(-_rotationY, transform.localEulerAngles.y, 0);
-        }
+    }
+
+    public void Pause()
+    {
+        _isPaused = true;
+    }
+
+    public void Resume()
+    {
+        _isPaused = false;
     }
 }
