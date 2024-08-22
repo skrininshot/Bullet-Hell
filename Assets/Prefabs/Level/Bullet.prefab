@@ -172,8 +172,8 @@ MonoBehaviour:
   _axes: 0
   _minimumX: -360
   _maximumX: 360
-  _minimumY: -60
-  _maximumY: 60
+  _minimumY: -90
+  _maximumY: 90
 --- !u!54 &-8778298172359414117
 Rigidbody:
   m_ObjectHideFlags: 0

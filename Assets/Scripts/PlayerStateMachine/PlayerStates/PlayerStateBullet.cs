@@ -28,7 +28,9 @@ public class PlayerStateBullet : State
         _timeShifter.TimeShift(_settings.TimeShiftValue);
 
         _bullet = _bulletFactory.Create();
-        _bullet.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        _bullet.transform.position = _bulletSpawnPoint.position; //.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        _bullet.transform.eulerAngles = _bulletSpawnPoint.eulerAngles; 
+
         _bullet.OnDestroy.AddListener(BulletDestroy);
 
         _cameraMover.SetTransform(_bullet.CameraPoint, _settings.CameraMoveToBulletSpeed);

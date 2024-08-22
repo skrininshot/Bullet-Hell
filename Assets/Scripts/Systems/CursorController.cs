@@ -6,7 +6,7 @@ using Zenject;
 public class CursorController : IInitializable, IDisposable
 {
     private readonly List<object> _users = new ();
-
+    
     public void Initialize()
     {
         HandleCursor();
@@ -19,13 +19,17 @@ public class CursorController : IInitializable, IDisposable
 
     public void RegisterUser(object user)
     {
-        _users.Add(user);
+        if (!_users.Contains(user))
+            _users.Add(user);
+
         HandleCursor();
     }
 
     public void UnregisterUser(object user)
     {
-        _users.Remove(user);
+        if (_users.Contains(user))
+            _users.Remove(user);
+
         HandleCursor();
     }
 

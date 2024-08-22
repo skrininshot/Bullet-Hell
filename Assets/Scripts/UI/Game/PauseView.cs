@@ -58,6 +58,11 @@ public class PauseView : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        _cursorController.UnregisterUser(this);
+    }
+
     [Serializable]
     public class Settings
     {

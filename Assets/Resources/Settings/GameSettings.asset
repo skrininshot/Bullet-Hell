@@ -23,10 +23,10 @@ MonoBehaviour:
       AimSensitivity: 0.5
     PlayerStates:
       BulletState:
-        CameraMoveToBulletSpeed: 0.25
+        CameraMoveToBulletSpeed: 1
         TimeShiftValue: 0.05
       AimingState:
-        CameraMoveToAimingSpeed: 0.25
+        CameraMoveToAimingSpeed: 0.5
   CameraZoom:
     ZoomInDuration: 0.2
     ZoomOutDuration: 0.2
@@ -35,4 +35,4 @@ MonoBehaviour:
     Speed: 50
   TimeShifter:
     DefaultTimeScale: 1
-    TimeShiftDuration: 0.5
+    TimeShiftDuration: 0.25

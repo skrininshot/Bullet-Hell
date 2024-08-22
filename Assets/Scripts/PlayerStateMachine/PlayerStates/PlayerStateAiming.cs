@@ -22,16 +22,20 @@ public class PlayerStateAiming : State
 
     public override void Start()
     {
-        _aimingView.gameObject.SetActive(true);
-        _mouseAiming.gameObject.SetActive(true);
+        if (_aimingView) _aimingView.gameObject.SetActive(true);
+
+        if (_mouseAiming) _mouseAiming.gameObject.SetActive(true);
+
         _mouseAiming.OnClick.AddListener(MouseClick);
         _cameraMover.SetTransform(_mouseAiming.transform, _settings.CameraMoveToAimingSpeed);
     }
 
     public override void Dispose()
     {
-        _aimingView.gameObject.SetActive(false);
-        _mouseAiming.gameObject.SetActive(false);
+        if (_aimingView) _aimingView.gameObject.SetActive(false);
+
+        if (_mouseAiming) _mouseAiming.gameObject.SetActive(false);
+
         _mouseAiming.OnClick.RemoveListener(MouseClick);
     }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using NaughtyAttributes;
 using Zenject;
 
 public class MouseRotate : MonoBehaviour, IPausable
@@ -6,13 +7,16 @@ public class MouseRotate : MonoBehaviour, IPausable
     [SerializeField] private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
     [SerializeField] private RotationAxes _axes = RotationAxes.MouseXAndY;
 
-    [SerializeField] private float _minimumX = -360f;
-    [SerializeField] private float _maximumX = 360f;
+    [SerializeField] private bool _clampX;
+    [ShowIf(nameof(_clampX))][SerializeField] private float _minimumX = -360f;
+    [ShowIf(nameof(_clampX))][SerializeField] private float _maximumX = 360f;
 
-    [SerializeField] private float _minimumY = -60f;
-    [SerializeField] private float _maximumY = 60f;
+    [SerializeField] private bool _clampY;
+    [ShowIf(nameof(_clampY))][SerializeField] private float _minimumY = -60f;
+    [ShowIf(nameof(_clampY))][SerializeField] private float _maximumY = 60f;
 
     private float _rotationY = 0f;
+    private float _rotationX = 0f;
     private float _mouseX = 0f;
     private float _mouseY = 0f;
 
@@ -31,6 +35,7 @@ public class MouseRotate : MonoBehaviour, IPausable
     private void Start()
     {
         _rotationY = -transform.localEulerAngles.x;
+        _rotationX = transform.localEulerAngles.y;
         _pauseSystem.RegisterPausable(this);
     }
 
@@ -56,17 +61,19 @@ public class MouseRotate : MonoBehaviour, IPausable
         if (_isPaused) return;
 
         _rotationY += _mouseY;
-        _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
+        if (_clampY) 
+            _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
+
+        _rotationX += _mouseX;
+        if (_clampX) 
+            _rotationX = Mathf.Clamp(_rotationX, _minimumX, _maximumX);
 
         if (_axes == RotationAxes.MouseXAndY)
-        {
-            float rotationX = transform.localEulerAngles.y + _mouseX;
-            transform.localEulerAngles = new Vector3(-_rotationY, rotationX, 0);
-        }
+            transform.localEulerAngles = new (-_rotationY, _rotationX, 0);
         else if (_axes == RotationAxes.MouseX)
-            transform.Rotate(0, _mouseX, 0);
+            transform.Rotate(0, _rotationX, 0);
         else
-            transform.localEulerAngles = new Vector3(-_rotationY, transform.localEulerAngles.y, 0);
+            transform.localEulerAngles = new Vector3(-_rotationY, _rotationX, 0);
     }
 
     public void Pause()
