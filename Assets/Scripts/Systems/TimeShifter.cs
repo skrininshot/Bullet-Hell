@@ -36,8 +36,6 @@ public class TimeShifter : IInitializable, IDisposable
     {
         Time.timeScale = value;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-
-        Debug.Log($"Time.timeScale: {Time.timeScale}");
     }
 
     public void SetIsPaused(bool value)

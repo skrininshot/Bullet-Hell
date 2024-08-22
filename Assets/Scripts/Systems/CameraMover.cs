@@ -13,14 +13,17 @@ public class CameraMover
         _camera = camera;
     }
 
-    public void SetTransform(Transform transform, float speed)
+    public void SetTransform(Transform transform, float duration)
     {
-        _camera.transform.SetParent(transform);
+        Debug.Log("set transform");
+        _camera.transform.SetParent(transform, true);
 
         if (_moving.IsActive()) _moving.Kill();
-        _moving = _camera.transform.DOLocalMove(Vector3.zero, speed);
+        _moving = _camera.transform.DOLocalMove(Vector3.zero, duration)
+            .OnUpdate(() => Debug.Log($"_camera.transform.localPosition: {_camera.transform.localPosition}")).SetUpdate(true);
 
         if (_rotation.IsActive()) _rotation.Kill();
-        _rotation = _camera.transform.DOLocalRotate(Vector3.zero, speed);
+        _rotation = _camera.transform.DOLocalRotate(Vector3.zero, duration)
+            .SetUpdate(true);
     }
 }

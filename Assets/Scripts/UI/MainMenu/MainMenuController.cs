@@ -20,14 +20,14 @@ public class MainMenuController : IInitializable, IDisposable
     public void Initialize()
     {
         _startButton.onClick.AddListener(StartLevel);
-        _cursorController.RegisterUser(GetHashCode());
+        _cursorController.RegisterUser(this);
     }
 
 
     public void Dispose()
     {
         _startButton.onClick.RemoveListener(StartLevel);
-        _cursorController.UnregisterUser(GetHashCode());
+        _cursorController.UnregisterUser(this);
     }
 
     public void SelectLevel(int index)
