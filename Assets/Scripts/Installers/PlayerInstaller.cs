@@ -35,6 +35,11 @@ public class PlayerInstaller : MonoInstaller
         Container.BindFactory<Bullet, Bullet.Factory>()
                 .FromComponentInNewPrefab(_bulletInstance)
                 .WithGameObjectName("Bullet");
+
+        Container.Bind<BulletHitHandler>().AsSingle();
+        Container.Bind<BulletHitAnimationFactory>().AsSingle();
+        Container.BindFactory<BulletHitAnimationOnlyTimeShift, BulletHitAnimationOnlyTimeShift.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
+        Container.BindFactory<BulletHitAnimationOrbit, BulletHitAnimationOrbit.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
     }
 
     private void InstallPlayerStateMachine()
@@ -43,6 +48,5 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PlayerStateMachine>().AsSingle();
         Container.BindFactory<PlayerStateAiming, PlayerStateAiming.Factory>().WhenInjectedInto<PlayerStateFactory>();
         Container.BindFactory<PlayerStateBullet, PlayerStateBullet.Factory>().WhenInjectedInto<PlayerStateFactory>();
-        Container.BindFactory<PlayerStateHit, PlayerStateHit.Factory>().WhenInjectedInto<PlayerStateFactory>();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,19 +11,26 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _cameraPoint;
 
-    private float _destroyTime;
+    private GameSettings.BulletSettings _settings;
+    private BulletHitHandler _bulletHitHandler;
+
     private float _speed;
 
     [Inject]
-    private void Construct(GameSettings gameSettings)
+    private void Construct(GameSettings gameSettings, BulletHitHandler bulletHitHandler)
     {
-        _destroyTime = gameSettings.Bullet.DestroyTime;
-        _speed = gameSettings.Bullet.Speed;
+        _settings = gameSettings.Bullet;
+        _bulletHitHandler = bulletHitHandler;
     }
 
     private void OnEnable()
     {
-        StartCoroutine(DestroyTimer(_destroyTime)); 
+        StartCoroutine(DestroyTimer(_settings.DestroyTime)); 
+    }
+
+    private void Start()
+    {
+        _speed = _settings.Speed;
     }
 
     private void Update()
@@ -32,9 +38,18 @@ public class Bullet : MonoBehaviour
         _rigidbody.velocity = _speed * transform.forward;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) => HandleCollision(collision);
+
+    private void HandleCollision (Collision collision)
     {
-        SelfDestroy(true);
+        if (collision.gameObject.TryGetComponent(out IDamagable damagable))
+        {
+            _bulletHitHandler.Hit(damagable);
+        }
+        else
+        {
+            SelfDestroy(true);
+        }
     }
 
     private IEnumerator DestroyTimer(float seconds)
@@ -47,13 +62,6 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
         OnDestroy?.Invoke(collision);
-    }
-
-    [Serializable]
-    public class Settings
-    {
-        public float DestroyTime = 5f;
-        public float Speed = 5f;
     }
 
     public class Factory : PlaceholderFactory<Bullet> { }

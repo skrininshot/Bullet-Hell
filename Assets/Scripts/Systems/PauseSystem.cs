@@ -29,14 +29,21 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
     {
         IsPaused = !IsPaused;
         _pauseView.Pause(IsPaused);
-        _timeShifter.SetIsPaused(IsPaused);
 
         if (IsPaused)
+        {
+            _timeShifter.RegisterUser(this, 0f);
+
             foreach (var pausable in _pausables)
                 pausable.Pause();
+        }   
         else
+        {
+            _timeShifter.UnregisterUser(this);
+
             foreach (var pausable in _pausables)
                 pausable.Resume();
+        }   
     }
 
     public void RegisterPausable(IPausable obj)

@@ -25,10 +25,10 @@ public class PlayerStateBullet : State
 
     public override void Start()
     {
-        _timeShifter.TimeShift(_settings.TimeShiftValue);
+        _timeShifter.RegisterUser(this, _settings.TimeShiftValue);
 
         _bullet = _bulletFactory.Create();
-        _bullet.transform.position = _bulletSpawnPoint.position; //.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        _bullet.transform.position = _bulletSpawnPoint.position;
         _bullet.transform.eulerAngles = _bulletSpawnPoint.eulerAngles; 
 
         _bullet.OnDestroy.AddListener(BulletDestroy);
@@ -38,13 +38,13 @@ public class PlayerStateBullet : State
 
     private void BulletDestroy(bool collision)
     {
-        _playerStateMachine.ChageState((int)PlayerStates.Hit);
+        _playerStateMachine.ChageState((int)PlayerStates.Aiming);
     }
 
     public override void Dispose()
     {
         _bullet.OnDestroy.RemoveListener(BulletDestroy);
-        _timeShifter.Reset();
+        _timeShifter.UnregisterUser(this);
     }
 
     [Serializable]

@@ -7,7 +7,7 @@ public class GameSettings : ScriptableObject
     public UISettings UI;
     public PlayerSetttings Player;
     public CameraZoom.Settings CameraZoom;
-    public Bullet.Settings Bullet;
+    public BulletSettings Bullet;
     public TimeShifter.Settings TimeShifter;
 
     [Serializable]
@@ -29,6 +29,27 @@ public class GameSettings : ScriptableObject
             public float Sensitivity = 1f;
             public float AimSensitivity = 0.5f;
         }
+    }
+
+    [Serializable]
+    public class BulletSettings
+    {
+        public float DestroyTime = 5f;
+        public float Speed = 5f;
+
+        public HitSettings Hit;
+
+        [Serializable]
+        public class HitSettings
+        {
+            public AnimationsSettings Animations;
+
+            [Serializable]
+            public class AnimationsSettings
+            {
+                public BulletHitAnimationOnlyTimeShift.Settings OnlyTimeShift;
+            }
+        }            
     }
 
     [Serializable]

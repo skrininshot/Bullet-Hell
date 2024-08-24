@@ -24,15 +24,20 @@ MonoBehaviour:
     PlayerStates:
       BulletState:
         CameraMoveToBulletSpeed: 1
-        TimeShiftValue: 0.05
+        TimeShiftValue: 0.1
       AimingState:
         CameraMoveToAimingSpeed: 0.5
   CameraZoom:
-    ZoomInDuration: 0.2
-    ZoomOutDuration: 0.2
+    ZoomInDuration: 0.1
+    ZoomOutDuration: 0.1
   Bullet:
-    DestroyTime: 5
+    DestroyTime: 1
     Speed: 50
+    Hit:
+      Animations:
+        OnlyTimeShift:
+          TimeShiftValue: 0.01
+          TimeShiftDelay: 1
   TimeShifter:
     DefaultTimeScale: 1
     TimeShiftDuration: 0.25
