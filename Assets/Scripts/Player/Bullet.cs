@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,11 +24,6 @@ public class Bullet : MonoBehaviour
         _bulletHitHandler = bulletHitHandler;
     }
 
-    private void OnEnable()
-    {
-        StartCoroutine(DestroyTimer(_settings.DestroyTime)); 
-    }
-
     private void Start()
     {
         _speed = _settings.Speed;
@@ -38,11 +34,11 @@ public class Bullet : MonoBehaviour
         _rigidbody.velocity = _speed * transform.forward;
     }
 
-    private void OnCollisionEnter(Collision collision) => HandleCollision(collision);
+    private void OnTriggerEnter(Collider other) => HandleCollision(other.gameObject);
 
-    private void HandleCollision (Collision collision)
+    private void HandleCollision (GameObject obj)
     {
-        if (collision.gameObject.TryGetComponent(out IDamagable damagable))
+        if (obj.TryGetComponent(out IDamagable damagable))
         {
             _bulletHitHandler.Hit(damagable);
         }
@@ -50,12 +46,6 @@ public class Bullet : MonoBehaviour
         {
             SelfDestroy(true);
         }
-    }
-
-    private IEnumerator DestroyTimer(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        SelfDestroy(false);
     }
 
     private void SelfDestroy(bool collision)

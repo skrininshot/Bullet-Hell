@@ -33,6 +33,8 @@ public class SceneTransition : IInitializable
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
+    public void RestartScene() => TransitionToLevel(SceneManager.GetActiveScene().buildIndex);
+
     protected void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _gameStateMachine.ChageState((int)_transitionNextState);

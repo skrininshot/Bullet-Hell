@@ -90,7 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
   _mouseAiming: {fileID: 0}
-  _bulletInstance: {fileID: -8114327443325271631, guid: 7af64eeecf5fb814e8a31075afd1e3c2,
+  _bulletInstance: {fileID: 5805783370738170983, guid: 7af64eeecf5fb814e8a31075afd1e3c2,
     type: 3}
   _bulletSpawnPoint: {fileID: 0}
 --- !u!1 &3532876888200221344
@@ -356,7 +356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38636991e1829b54291319dfcf13f9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTransform: {fileID: 8291427020687003796}
   _aimingView: {fileID: 5470230996261650079}
   _pauseView: {fileID: 1822501421204359337}
 --- !u!1001 &2677445227919826781
@@ -367,6 +366,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8291427020687003796}
     m_Modifications:
+    - target: {fileID: 1455541019015920157, guid: da2f08b6da25bf444857ede81a1b3291,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 160
+      objectReference: {fileID: 0}
     - target: {fileID: 1551360569316513571, guid: da2f08b6da25bf444857ede81a1b3291,
         type: 3}
       propertyPath: m_Pivot.x

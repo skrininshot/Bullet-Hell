@@ -7,6 +7,7 @@ using Zenject;
 public class PauseView : MonoBehaviour
 {
     public Button ContinueButton => _continueButton;
+    public Button RestartButton => _restartButton;
     public Button MenuButton => _menuButton;
 
     private Settings _settings;
@@ -17,6 +18,7 @@ public class PauseView : MonoBehaviour
     [SerializeField] private float _showX = 0;
     [SerializeField] private float _hideX = -1000;
     [SerializeField] private Button _continueButton;
+    [SerializeField] private Button _restartButton;
     [SerializeField] private Button _menuButton;
 
     private CursorController _cursorController;

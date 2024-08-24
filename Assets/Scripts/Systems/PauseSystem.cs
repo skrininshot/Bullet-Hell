@@ -22,6 +22,7 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
     public void Initialize()
     {
         _pauseView.ContinueButton.onClick.AddListener(Pause);
+        _pauseView.RestartButton.onClick.AddListener(_sceneTransition.RestartScene);
         _pauseView.MenuButton.onClick.AddListener(_sceneTransition.TransitionToMenu);
     }
 
@@ -67,6 +68,7 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
     public void Dispose()
     {
         _pauseView.ContinueButton.onClick.RemoveListener(Pause);
+        _pauseView.RestartButton.onClick.AddListener(_sceneTransition.RestartScene);
         _pauseView.MenuButton.onClick.RemoveListener(_sceneTransition.TransitionToMenu);
     }
 }

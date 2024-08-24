@@ -34,8 +34,7 @@ public class GameSettings : ScriptableObject
     [Serializable]
     public class BulletSettings
     {
-        public float DestroyTime = 5f;
-        public float Speed = 5f;
+        public float Speed = 50f;
 
         public HitSettings Hit;
 

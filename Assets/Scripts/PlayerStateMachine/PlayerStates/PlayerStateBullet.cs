@@ -1,8 +1,9 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 using Zenject;
 
-public class PlayerStateBullet : State
+public class PlayerStateBullet : State, IPausable
 {
     private Settings _settings;
     private PlayerStateMachine _playerStateMachine;
@@ -11,9 +12,13 @@ public class PlayerStateBullet : State
     private Transform _bulletSpawnPoint;
     private CameraMover _cameraMover;
     private TimeShifter _timeShifter;
+    private PauseSystem _pauseSystem;
+
+    private Sequence _sequence;
 
     public PlayerStateBullet(GameSettings settings, PlayerStateMachine playerStateMachine, Bullet.Factory bulletFactory, 
-        [Inject(Id = "BulletSpawnPoint")] Transform bulletSpawnPoint, CameraMover cameraMover, TimeShifter timeShifter)
+        [Inject(Id = "BulletSpawnPoint")] Transform bulletSpawnPoint, CameraMover cameraMover, TimeShifter timeShifter, 
+        PauseSystem pauseSystem)
     {
         _settings = settings.Player.PlayerStates.BulletState;
         _playerStateMachine = playerStateMachine;
@@ -21,6 +26,7 @@ public class PlayerStateBullet : State
         _bulletSpawnPoint = bulletSpawnPoint;
         _cameraMover = cameraMover;
         _timeShifter = timeShifter;
+        _pauseSystem = pauseSystem;
     }
 
     public override void Start()
@@ -34,17 +40,45 @@ public class PlayerStateBullet : State
         _bullet.OnDestroy.AddListener(BulletDestroy);
 
         _cameraMover.SetTransform(_bullet.CameraPoint, _settings.CameraMoveToBulletSpeed);
+
+        _pauseSystem.RegisterPausable(this);
+
+        CreateSquence();
     }
 
-    private void BulletDestroy(bool collision)
+    private void CreateSquence()
     {
-        _playerStateMachine.ChageState((int)PlayerStates.Aiming);
+        _sequence = DOTween.Sequence();
+        _sequence.PrependInterval(_settings.BulletLifeTime);
+        _sequence.AppendCallback(() => UnityEngine.Object.Destroy(_bullet.gameObject));
+        _sequence.AppendCallback(() => ReturnToAimingState());
+        _sequence.SetUpdate(true);
+        _sequence.Play();
     }
+
+    private void BulletDestroy(bool collision) => ReturnToAimingState();
+
+    private void ReturnToAimingState() => 
+        _playerStateMachine.ChageState((int)PlayerStates.Aiming);
 
     public override void Dispose()
     {
+        _sequence.Kill();
         _bullet.OnDestroy.RemoveListener(BulletDestroy);
         _timeShifter.UnregisterUser(this);
+        _pauseSystem.UnregisterPausable(this);
+    }
+
+    public void Pause()
+    {
+        if (_sequence.IsActive())
+            _sequence.Pause();
+    }
+
+    public void Resume()
+    {
+        if (_sequence.IsActive())
+            _sequence.Play();
     }
 
     [Serializable]
@@ -52,6 +86,7 @@ public class PlayerStateBullet : State
     {
         public float CameraMoveToBulletSpeed = 0.1f;
         public float TimeShiftValue = 0.25f;
+        public float BulletLifeTime = 10f;
     }
 
     public class Factory : PlaceholderFactory<PlayerStateBullet> { }
