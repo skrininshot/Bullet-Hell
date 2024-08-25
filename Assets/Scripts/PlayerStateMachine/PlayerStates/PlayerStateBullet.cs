@@ -20,7 +20,7 @@ public class PlayerStateBullet : State, IPausable
         [Inject(Id = "BulletSpawnPoint")] Transform bulletSpawnPoint, CameraMover cameraMover, TimeShifter timeShifter, 
         PauseSystem pauseSystem)
     {
-        _settings = settings.Player.PlayerStates.BulletState;
+        _settings = settings.Player.States.BulletState;
         _playerStateMachine = playerStateMachine;
         _bulletFactory = bulletFactory;
         _bulletSpawnPoint = bulletSpawnPoint;

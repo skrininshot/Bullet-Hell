@@ -6,8 +6,6 @@ public class MouseAiming : MouseRotate
 {
     [HideInInspector] public UnityEvent OnClick = new();
 
-    [SerializeField] private float _aimZoomSize = 0.5f;
-
     private CameraZoom _camera;
 
     [Inject]
@@ -44,7 +42,7 @@ public class MouseAiming : MouseRotate
 
         if (_camera.IsZoomed != rmbClicked)
             if (rmbClicked)
-                _camera.ZoomIn(_aimZoomSize);
+                _camera.ZoomIn();
             else
                 _camera.ZoomOut();
     }

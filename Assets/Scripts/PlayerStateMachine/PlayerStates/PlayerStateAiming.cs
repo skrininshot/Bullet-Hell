@@ -13,7 +13,7 @@ public class PlayerStateAiming : State
     public PlayerStateAiming (GameSettings settings, PlayerStateMachine playerStateMachine, 
         CameraMover cameraMover, MouseAiming mouseAiming, AimingView aimingUI)
     {
-        _settings = settings.Player.PlayerStates.AimingState;
+        _settings = settings.Player.States.AimingState;
         _playerStateMachine = playerStateMachine;
         _cameraMover = cameraMover;
         _mouseAiming = mouseAiming;

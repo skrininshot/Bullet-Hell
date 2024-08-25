@@ -21,16 +21,17 @@ MonoBehaviour:
     Control:
       Sensitivity: 1
       AimSensitivity: 0.5
-    PlayerStates:
+    States:
       BulletState:
-        CameraMoveToBulletSpeed: 1
+        CameraMoveToBulletSpeed: 0.5
         TimeShiftValue: 0.05
         BulletLifeTime: 10
       AimingState:
-        CameraMoveToAimingSpeed: 0.5
+        CameraMoveToAimingSpeed: 0.2
   CameraZoom:
     ZoomInDuration: 0.1
     ZoomOutDuration: 0.1
+    ZoomSizeValue: 0.5
   Bullet:
     Speed: 75
     Hit:

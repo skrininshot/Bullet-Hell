@@ -30,7 +30,9 @@ public class CameraZoom : IInitializable
         float endValue = _camera.fieldOfView * zoom;
         DOTween.To(() => _camera.fieldOfView, x => _camera.fieldOfView = x, endValue, _settings.ZoomInDuration);
     }
-    
+
+    public void ZoomIn() => ZoomIn(_settings.ZoomSizeValue);
+
     public void ZoomOut()
     {
         IsZoomed = false;
@@ -44,5 +46,6 @@ public class CameraZoom : IInitializable
     {
         public float ZoomInDuration = 0.1f;
         public float ZoomOutDuration = 0.1f;
+        public float ZoomSizeValue = 0.5f;
     }
 }

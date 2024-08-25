@@ -14,7 +14,7 @@ public class GameSettings : ScriptableObject
     public class PlayerSetttings
     {
         public ControlSettings Control;
-        public PlayerStatesSettings PlayerStates;
+        public PlayerStatesSettings States;
 
         [Serializable]
         public class PlayerStatesSettings
