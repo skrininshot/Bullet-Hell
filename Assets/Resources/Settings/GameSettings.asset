@@ -39,6 +39,14 @@ MonoBehaviour:
         OnlyTimeShift:
           TimeShiftValue: 0.005
           TimeShiftDelay: 0.5
+        Orbit:
+          Height: 1
+          OrbitRadius: 0.2
+          OrbitSegments: 3
+          EnterDuration: 0.2
+          Duration: 3
+          ExitDuration: 1
+          TimeScale: 0
   TimeShifter:
     DefaultTimeScale: 1
     TimeShiftDuration: 0.25

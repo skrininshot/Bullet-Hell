@@ -6,6 +6,6 @@ public abstract class BulletHitAnimation : IDisposable
 
     public virtual void Dispose()
     {
-
+        
     }
 }

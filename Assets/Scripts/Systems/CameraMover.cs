@@ -1,11 +1,11 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using static GameSettings.PlayerSetttings;
 using Zenject;
 using System;
 
 public class CameraMover : IInitializable, IDisposable, IPausable
 {
+    public Transform Transform { get; private set; }
     private readonly Camera _camera;
 
     private Tween _moving;
@@ -16,6 +16,7 @@ public class CameraMover : IInitializable, IDisposable, IPausable
     public CameraMover(Camera camera, PauseSystem pauseSystem) 
     {
         _camera = camera;
+        Transform = _camera.transform;
         _pauseSystem = pauseSystem;
     }
 
@@ -49,15 +50,15 @@ public class CameraMover : IInitializable, IDisposable, IPausable
 
     public void SetTransform(Transform transform, float duration)
     {
-        _camera.transform.localPosition = Vector3.zero;
-        _camera.transform.localEulerAngles = Vector3.zero;
+        Transform.localPosition = Vector3.zero;
+        Transform.localEulerAngles = Vector3.zero;
 
-        _camera.transform.SetParent(transform, true);
+        Transform.SetParent(transform, true);
 
         if (_moving.IsActive()) _moving.Kill();
-        _moving = _camera.transform.DOLocalMove(Vector3.zero, duration);
+        _moving = Transform.DOLocalMove(Vector3.zero, duration);
 
         if (_rotation.IsActive()) _rotation.Kill();
-        _rotation = _camera.transform.DOLocalRotate(Vector3.zero, duration);
+        _rotation = Transform.DOLocalRotate(Vector3.zero, duration);
     }
 }

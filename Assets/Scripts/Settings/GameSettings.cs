@@ -47,6 +47,7 @@ public class GameSettings : ScriptableObject
             public class AnimationsSettings
             {
                 public BulletHitAnimationOnlyTimeShift.Settings OnlyTimeShift;
+                public BulletHitAnimationOrbit.Settings Orbit;
             }
         }            
     }
