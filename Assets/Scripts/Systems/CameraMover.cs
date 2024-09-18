@@ -50,9 +50,6 @@ public class CameraMover : IInitializable, IDisposable, IPausable
 
     public void SetTransform(Transform transform, float duration)
     {
-        Transform.localPosition = Vector3.zero;
-        Transform.localEulerAngles = Vector3.zero;
-
         Transform.SetParent(transform, true);
 
         if (_moving.IsActive()) _moving.Kill();

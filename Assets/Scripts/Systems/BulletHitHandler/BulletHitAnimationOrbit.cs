@@ -3,48 +3,32 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class BulletHitAnimationOrbit : BulletHitAnimation, IInitializable, IDisposable, IPausable
+public class BulletHitAnimationOrbit : BulletHitAnimation, IPausable
 {
     private readonly TimeShifter _timeShifter;
     private readonly CameraMover _cameraMover;
     private readonly Settings _settings;
-    private Sequence _sequence;
-    private PauseSystem _pauseSystem;
-    
-    public BulletHitAnimationOrbit(TimeShifter timeShifter, CameraMover cameraMover, GameSettings settings, PauseSystem pauseSystem)
+
+    public BulletHitAnimationOrbit(TimeShifter timeShifter, CameraMover cameraMover, GameSettings settings)
     {
         _timeShifter = timeShifter;
         _cameraMover = cameraMover;
         _settings = settings.Bullet.Hit.Animations.Orbit;
-        _pauseSystem = pauseSystem;
-    }
-
-    public void Initialize()
-    {
-        _pauseSystem.RegisterPausable(this);
-    }
-
-    public override void Dispose()
-    {
-        _sequence.Kill(true);
-        _pauseSystem.UnregisterPausable(this);
     }
 
     public override void Play()
     {
-        _sequence = DOTween.Sequence();
-
         float segmentDuration = _settings.Duration / _settings.OrbitSegments;
         float segmentHeight = (_settings.OrbitRadius * 2f) / _settings.OrbitSegments;
+        float segmentAngle = (360f / _settings.OrbitSegments);
         Vector3 originalPosition = _cameraMover.Transform.localPosition;
-        Vector3 startPosition = originalPosition + new Vector3(0f, _settings.OrbitRadius * _settings.Height, 0f);
 
         _sequence.AppendCallback(() => _timeShifter.RegisterUser(this, _settings.TimeScale));
 
         //orbit rotation
         for (int i = 0; i < _settings.OrbitSegments; i++)
         {
-            float angle = (360f / _settings.OrbitSegments) * i;
+            float angle = segmentAngle * i;
             
             Vector3 orbitPosition = 
                 new (
@@ -68,19 +52,7 @@ public class BulletHitAnimationOrbit : BulletHitAnimation, IInitializable, IDisp
                     .OnUpdate(() => CameraLookAtOriginalPosition()));
         }
 
-        //return to original
-        _sequence.Append(_cameraMover.Transform
-            .DOLocalMove(originalPosition, _settings.ExitDuration));
-
-        _sequence.Join(_cameraMover.Transform
-                .DOLocalRotateQuaternion(Quaternion.LookRotation(Vector3.zero), _settings.ExitDuration));
-
-        _sequence.OnComplete(() =>
-        {
-            _timeShifter.UnregisterUser(this);
-            _cameraMover.Transform.localPosition = Vector3.zero;
-            _cameraMover.Transform.localEulerAngles = Vector3.zero;
-        });
+        _sequence.OnComplete(() => OnSequenceComplete());
 
 
         void CameraLookAtOriginalPosition() 
@@ -90,16 +62,12 @@ public class BulletHitAnimationOrbit : BulletHitAnimation, IInitializable, IDisp
         }       
     }
 
-    public void Pause()
+    protected override void OnSequenceComplete()
     {
-        if (_sequence.IsActive())
-            _sequence.Pause();
-    }
+        base.OnSequenceComplete();
 
-    public void Resume()
-    {
-        if (_sequence.IsActive())
-            _sequence.Play();
+        _timeShifter.UnregisterUser(this);
+        _cameraMover.SetTransform(_cameraMover.Transform.parent, _settings.ExitDuration);
     }
 
     [Serializable]

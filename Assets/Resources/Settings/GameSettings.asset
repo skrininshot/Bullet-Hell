@@ -41,12 +41,12 @@ MonoBehaviour:
           TimeShiftDelay: 0.5
         Orbit:
           Height: 1
-          OrbitRadius: 0.2
+          OrbitRadius: 0.125
           OrbitSegments: 3
-          EnterDuration: 0.2
+          EnterDuration: 1
           Duration: 3
           ExitDuration: 1
-          TimeScale: 0
+          TimeScale: 0.005
   TimeShifter:
     DefaultTimeScale: 1
     TimeShiftDuration: 0.25

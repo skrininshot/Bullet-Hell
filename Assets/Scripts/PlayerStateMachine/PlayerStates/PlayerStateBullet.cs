@@ -39,6 +39,7 @@ public class PlayerStateBullet : State, IPausable
         _bullet.transform.position = _bulletSpawnPoint.position;
         _bullet.transform.eulerAngles = _bulletSpawnPoint.eulerAngles; 
 
+        _bulletHitHandler.Initialize();
         _bullet.OnHit.AddListener(OnBulletHit);
 
         _cameraMover.SetTransform(_bullet.CameraPoint, _settings.CameraMoveToBulletSpeed);
@@ -54,7 +55,7 @@ public class PlayerStateBullet : State, IPausable
         _sequence.PrependInterval(_settings.BulletLifeTime);
         _sequence.AppendCallback(() => UnityEngine.Object.Destroy(_bullet.gameObject));
         _sequence.AppendCallback(() => ReturnToAimingState());
-        _sequence.SetUpdate(true);
+        _sequence.SetUpdate(false);
         _sequence.Play();
     }
 
@@ -67,6 +68,7 @@ public class PlayerStateBullet : State, IPausable
     {
         _sequence.Kill();
         _bullet.OnHit.RemoveListener(OnBulletHit);
+        _bulletHitHandler.Dispose();
         _timeShifter.UnregisterUser(this);
         _pauseSystem.UnregisterPausable(this);
     }

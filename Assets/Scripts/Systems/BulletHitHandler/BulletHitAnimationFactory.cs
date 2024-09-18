@@ -19,7 +19,7 @@ public class BulletHitAnimationFactory
         _orbitFactory = orbitFactory;
     }
 
-    public BulletHitAnimation CreateState(int state)
+    public BulletHitAnimation CreateAnimation(int state)
     {
         switch (state)
         {
