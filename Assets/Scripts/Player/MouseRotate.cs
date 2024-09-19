@@ -4,9 +4,6 @@ using Zenject;
 
 public class MouseRotate : MonoBehaviour, IPausable
 {
-    [SerializeField] private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-    [SerializeField] private RotationAxes _axes = RotationAxes.MouseXAndY;
-
     [SerializeField] private bool _clampX;
     [ShowIf(nameof(_clampX))][SerializeField] private float _minimumX = -360f;
     [ShowIf(nameof(_clampX))][SerializeField] private float _maximumX = 360f;
@@ -15,8 +12,10 @@ public class MouseRotate : MonoBehaviour, IPausable
     [ShowIf(nameof(_clampY))][SerializeField] private float _minimumY = -60f;
     [ShowIf(nameof(_clampY))][SerializeField] private float _maximumY = 60f;
 
-    private float _rotationY = 0f;
+    private Transform _transform;
+
     private float _rotationX = 0f;
+    private float _rotationY = 0f;
     private float _mouseX = 0f;
     private float _mouseY = 0f;
 
@@ -32,10 +31,16 @@ public class MouseRotate : MonoBehaviour, IPausable
         _pauseSystem = pauseSystem;
     }
 
-    private void Start()
+    private void Awake()
     {
-        _rotationY = -transform.localEulerAngles.x;
-        _rotationX = transform.localEulerAngles.y;
+        _transform = transform;
+    }
+
+    private void OnEnable()
+    {
+        _rotationX = _transform.eulerAngles.x;
+        _rotationY = _transform.eulerAngles.y;
+
         _pauseSystem.RegisterPausable(this);
     }
 
@@ -60,20 +65,25 @@ public class MouseRotate : MonoBehaviour, IPausable
     {
         if (_isPaused) return;
 
-        _rotationY += _mouseY;
-        if (_clampY) 
-            _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
+        _rotationX += -_mouseY;
 
-        _rotationX += _mouseX;
+        if (_rotationX > 270)
+            _rotationX -= 360;
+
         if (_clampX) 
             _rotationX = Mathf.Clamp(_rotationX, _minimumX, _maximumX);
 
-        if (_axes == RotationAxes.MouseXAndY)
-            transform.localEulerAngles = new (-_rotationY, _rotationX, 0);
-        else if (_axes == RotationAxes.MouseX)
-            transform.Rotate(0, _rotationX, 0);
-        else
-            transform.localEulerAngles = new Vector3(-_rotationY, _rotationX, 0);
+        _rotationY += _mouseX;
+
+        if (_rotationY > 270)
+            _rotationY -= 360;
+
+        if (_clampY) 
+            _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
+
+         _transform.eulerAngles = new (_rotationX, _rotationY, 0);
+
+        Debug.Log(_transform.eulerAngles);
     }
 
     public void Pause()

@@ -47,6 +47,17 @@ MonoBehaviour:
           Duration: 3
           ExitDuration: 1
           TimeScale: 0.005
+    AirFlow:
+      MaxCount: 10
+      Frequency: 0.001
+      SinMultiply: 720
+      Effect:
+        TargetScale: {x: 0.25, y: 0.25, z: 0.1}
+        ScaleUpDuration: 0.025
+        ScaleUpEase: 15
+        LifeTime: 0.025
+        ScaleDownDuration: 0.025
+        ScaleDownEase: 7
   TimeShifter:
     DefaultTimeScale: 1
     TimeShiftDuration: 0.25

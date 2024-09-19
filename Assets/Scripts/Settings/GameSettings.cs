@@ -38,6 +38,8 @@ public class GameSettings : ScriptableObject
 
         public HitSettings Hit;
 
+        public AirFlowSettings AirFlow;
+
         [Serializable]
         public class HitSettings
         {
@@ -49,7 +51,16 @@ public class GameSettings : ScriptableObject
                 public BulletHitAnimationOnlyTimeShift.Settings OnlyTimeShift;
                 public BulletHitAnimationOrbit.Settings Orbit;
             }
-        }            
+        }
+
+        [Serializable]
+        public class AirFlowSettings
+        {
+            public int MaxCount = 10;
+            public float Frequency = 0.001f;
+            public float SinMultiply = 720f;
+            public AirFlowEffect.Settings Effect;
+        }
     }
 
     [Serializable]

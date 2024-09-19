@@ -7,40 +7,45 @@ public class PlayerStateBullet : State, IPausable
 {
     private Settings _settings;
     private PlayerStateMachine _playerStateMachine;
-    private Bullet.Factory _bulletFactory;
     private Bullet _bullet;
     private Transform _bulletSpawnPoint;
     private CameraMover _cameraMover;
     private TimeShifter _timeShifter;
     private PauseSystem _pauseSystem;
     private BulletHitHandler _bulletHitHandler;
+    private AirFlowEffectSpawner _airFlowSpawner;
 
     private Sequence _sequence;
 
-    public PlayerStateBullet(GameSettings settings, PlayerStateMachine playerStateMachine, Bullet.Factory bulletFactory, 
+    public PlayerStateBullet(GameSettings settings, PlayerStateMachine playerStateMachine, Bullet bullet, 
         [Inject(Id = "BulletSpawnPoint")] Transform bulletSpawnPoint, CameraMover cameraMover, TimeShifter timeShifter, 
-        PauseSystem pauseSystem, BulletHitHandler bulletHitHandler)
+        PauseSystem pauseSystem, BulletHitHandler bulletHitHandler, AirFlowEffectSpawner airFlowSpawner)
     {
         _settings = settings.Player.States.BulletState;
         _playerStateMachine = playerStateMachine;
-        _bulletFactory = bulletFactory;
+        _bullet = bullet;
         _bulletSpawnPoint = bulletSpawnPoint;
         _cameraMover = cameraMover;
         _timeShifter = timeShifter;
         _pauseSystem = pauseSystem;
         _bulletHitHandler = bulletHitHandler;
+        _airFlowSpawner = airFlowSpawner;
+
+        _bullet.gameObject.SetActive(false);
     }
 
     public override void Start()
     {
         _timeShifter.RegisterUser(this, _settings.TimeShiftValue);
 
-        _bullet = _bulletFactory.Create();
         _bullet.transform.position = _bulletSpawnPoint.position;
         _bullet.transform.eulerAngles = _bulletSpawnPoint.eulerAngles; 
+        _bullet.gameObject.SetActive(true);
 
         _bulletHitHandler.Initialize();
         _bullet.OnHit.AddListener(OnBulletHit);
+
+        _airFlowSpawner.Start();
 
         _cameraMover.SetTransform(_bullet.CameraPoint, _settings.CameraMoveToBulletSpeed);
 
@@ -53,8 +58,9 @@ public class PlayerStateBullet : State, IPausable
     {
         _sequence = DOTween.Sequence();
         _sequence.PrependInterval(_settings.BulletLifeTime);
-        _sequence.AppendCallback(() => UnityEngine.Object.Destroy(_bullet.gameObject));
-        _sequence.AppendCallback(() => ReturnToAimingState());
+
+        _sequence.OnComplete(() => { ReturnToAimingState();});
+
         _sequence.SetUpdate(false);
         _sequence.Play();
     }
@@ -67,8 +73,13 @@ public class PlayerStateBullet : State, IPausable
     public override void Dispose()
     {
         _sequence.Kill();
+
         _bullet.OnHit.RemoveListener(OnBulletHit);
         _bulletHitHandler.Dispose();
+        _bullet.gameObject.SetActive(false);
+
+        _airFlowSpawner.Stop();
+
         _timeShifter.UnregisterUser(this);
         _pauseSystem.UnregisterPausable(this);
     }

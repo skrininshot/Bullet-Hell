@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using Zenject;
+using Zenject.SpaceFighter;
 
 public class PlayerInstaller : MonoInstaller
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private MouseAiming _mouseAiming; 
-    [SerializeField] private Bullet _bulletInstance;
+    [SerializeField] private MouseAiming _mouseAiming;
+
+    [Header("Bullet")]
+    [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _bulletSpawnPoint;
+    [SerializeField] private AirFlowEffect _airFlowEffectPrefab;
 
     public override void InstallBindings()
     {
@@ -32,14 +37,20 @@ public class PlayerInstaller : MonoInstaller
     {
         Container.BindInstance(_bulletSpawnPoint).WithId("BulletSpawnPoint").AsSingle();
 
-        Container.BindFactory<Bullet, Bullet.Factory>()
-                .FromComponentInNewPrefab(_bulletInstance)
-                .WithGameObjectName("Bullet");
+        Container.Bind<Bullet>().FromComponentInNewPrefab(_bulletPrefab).AsSingle();
 
         Container.Bind<BulletHitHandler>().AsSingle();
         Container.Bind<BulletHitAnimationFactory>().AsSingle();
         Container.BindFactory<BulletHitAnimationOnlyTimeShift, BulletHitAnimationOnlyTimeShift.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
         Container.BindFactory<BulletHitAnimationOrbit, BulletHitAnimationOrbit.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
+
+        Container.Bind<AirFlowEffectSpawner>().AsSingle();
+        Container.BindFactory<Vector3, Vector3, AirFlowEffect.Settings, float, AirFlowEffect, AirFlowEffect.Factory>()
+            .FromPoolableMemoryPool<Vector3, Vector3, AirFlowEffect.Settings, float, AirFlowEffect, AirFlowEffectPool>
+            (poolBinder => poolBinder
+                .WithInitialSize(20)
+                .FromComponentInNewPrefab(_airFlowEffectPrefab)
+                .UnderTransformGroup("AirFlowEffect"));
     }
 
     private void InstallPlayerStateMachine()
@@ -49,4 +60,6 @@ public class PlayerInstaller : MonoInstaller
         Container.BindFactory<PlayerStateAiming, PlayerStateAiming.Factory>().WhenInjectedInto<PlayerStateFactory>();
         Container.BindFactory<PlayerStateBullet, PlayerStateBullet.Factory>().WhenInjectedInto<PlayerStateFactory>();
     }
+
+    public class  AirFlowEffectPool : MonoPoolableMemoryPool<Vector3, Vector3, AirFlowEffect.Settings, float, IMemoryPool, AirFlowEffect> { }
 }

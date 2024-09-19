@@ -108,14 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ca4a1aa41e40f4f8310abb7c9f1eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _axes: 0
   _clampX: 1
-  _minimumX: -75
-  _maximumX: 75
+  _minimumX: -45
+  _maximumX: 60
   _clampY: 1
-  _minimumY: -60
-  _maximumY: 45
+  _minimumY: -75
+  _maximumY: 75
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-  _aimZoomSize: 0.5
