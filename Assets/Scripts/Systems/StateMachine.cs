@@ -28,7 +28,7 @@ public abstract class StateMachine : IInitializable, ITickable, IDisposable
 
     public virtual void Dispose() => _currentState?.Dispose();
 
-    public virtual void ChageState(int state)
+    public virtual void ChangeState(int state)
     {
         _currentState?.Dispose();
         _currentState = _factory.CreateState(state);

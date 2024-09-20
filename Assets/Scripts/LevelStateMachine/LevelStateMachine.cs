@@ -4,4 +4,9 @@
     {
         _factory = factory;
     }
+
+    public override void Initialize()
+    {
+        ChangeState((int)LevelStates.GettingReady);
+    }
 }

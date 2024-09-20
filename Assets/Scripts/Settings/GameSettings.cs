@@ -71,7 +71,8 @@ public class GameSettings : ScriptableObject
         [Serializable]
         public class GameUISettings
         {
-            public PauseView.Settings PauseView;
+            public PauseBaseView.BaseSettings PauseBaseView;
+            public PauseBaseView.BaseSettings AwardView;
         }
     }
 }

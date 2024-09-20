@@ -8,6 +8,6 @@ public class LevelStateMachineInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<LevelStateMachine>().AsSingle();
         Container.BindFactory<LevelStateGettingReady, LevelStateGettingReady.Factory>().WhenInjectedInto<LevelStateFactory>();
         Container.BindFactory<LevelStatePlaying, LevelStatePlaying.Factory>().WhenInjectedInto<LevelStateFactory>();
-        Container.BindFactory<LevelStateScore, LevelStateScore.Factory>().WhenInjectedInto<LevelStateFactory>();
+        Container.BindFactory<LevelStateAward, LevelStateAward.Factory>().WhenInjectedInto<LevelStateFactory>();
     }
 }

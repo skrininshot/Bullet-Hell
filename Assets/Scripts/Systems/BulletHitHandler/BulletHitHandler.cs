@@ -35,7 +35,7 @@ public class BulletHitHandler
         }
     }
 
-    private void ReturnToAimingState() => _playerStateMachine.ChageState((int)PlayerStates.Aiming);
+    private void ReturnToAimingState() => _playerStateMachine.ChangeState((int)PlayerStates.Aiming);
 
     private void PlayNewAnimation()
     {

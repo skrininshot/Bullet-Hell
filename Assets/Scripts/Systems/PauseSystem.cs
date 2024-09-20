@@ -1,35 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+﻿using System.Collections.Generic;
 
-public class PauseSystem : IInitializable, ITickable, IDisposable
+public class PauseSystem
 {
     public bool IsPaused { get; private set; }
 
-    private readonly PauseView _pauseView;
-    private readonly SceneTransition _sceneTransition;
     private readonly TimeShifter _timeShifter;
     private readonly List<IPausable> _pausables = new();
 
-    public PauseSystem(PauseView pauseSystemView, SceneTransition sceneTransition, TimeShifter timeShifter)
+    public PauseSystem(TimeShifter timeShifter)
     {
-        _pauseView = pauseSystemView;
-        _sceneTransition = sceneTransition;
         _timeShifter = timeShifter;
     }
 
-    public void Initialize()
+    public void SetPause(bool value)
     {
-        _pauseView.ContinueButton.onClick.AddListener(Pause);
-        _pauseView.RestartButton.onClick.AddListener(_sceneTransition.RestartScene);
-        _pauseView.MenuButton.onClick.AddListener(_sceneTransition.TransitionToMenu);
-    }
+        if (IsPaused == value) return;
 
-    private void Pause()
-    {
-        IsPaused = !IsPaused;
-        _pauseView.Pause(IsPaused);
+        IsPaused = value;
 
         if (IsPaused)
         {
@@ -57,18 +44,5 @@ public class PauseSystem : IInitializable, ITickable, IDisposable
     {
         if (_pausables.Contains(obj))
             _pausables.Remove(obj);
-    }
-
-    public void Tick()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Pause();
-    }
-
-    public void Dispose()
-    {
-        _pauseView.ContinueButton.onClick.RemoveListener(Pause);
-        _pauseView.RestartButton.onClick.AddListener(_sceneTransition.RestartScene);
-        _pauseView.MenuButton.onClick.RemoveListener(_sceneTransition.TransitionToMenu);
     }
 }

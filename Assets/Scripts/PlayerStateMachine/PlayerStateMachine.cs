@@ -7,6 +7,6 @@ public class PlayerStateMachine : StateMachine
 
     public override void Initialize()
     {
-        ChageState((int)PlayerStates.Aiming);
+        ChangeState((int)PlayerStates.Aiming);
     }
 }

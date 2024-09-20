@@ -279,7 +279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -653.8125, y: 0}
+  m_AnchoredPosition: {x: -1000, y: 0}
   m_SizeDelta: {x: 275, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8454883951610756339
@@ -1057,9 +1057,9 @@ MonoBehaviour:
   _popup: {fileID: 1204366962949195000}
   _showX: 0
   _hideX: -1000
-  _continueButton: {fileID: 7853444250095033963}
   _restartButton: {fileID: 3842358473532328880}
   _menuButton: {fileID: 7132604896812436407}
+  _continueButton: {fileID: 7853444250095033963}
 --- !u!1 &8369949759502424964
 GameObject:
   m_ObjectHideFlags: 0

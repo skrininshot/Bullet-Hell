@@ -68,7 +68,7 @@ public class PlayerStateBullet : State, IPausable
     private void OnBulletHit(GameObject obj) => _bulletHitHandler.HandleHit(obj);
 
     private void ReturnToAimingState() => 
-        _playerStateMachine.ChageState((int)PlayerStates.Aiming);
+        _playerStateMachine.ChangeState((int)PlayerStates.Aiming);
 
     public override void Dispose()
     {

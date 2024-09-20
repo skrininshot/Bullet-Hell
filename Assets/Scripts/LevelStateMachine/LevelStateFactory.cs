@@ -4,23 +4,23 @@ public enum LevelStates
 {
     GettingReady,
     Playing,
-    Score
+    Award
 }
 
 public class LevelStateFactory : StateFactory
 {
     readonly LevelStateGettingReady.Factory _gettingReadyFactory;
     readonly LevelStatePlaying.Factory _playingfactory;
-    readonly LevelStateScore.Factory _scoreFactory;
+    readonly LevelStateAward.Factory _awardFactory;
 
     public LevelStateFactory(
         LevelStateGettingReady.Factory gettingReadyFactory,
         LevelStatePlaying.Factory playingFactory,
-        LevelStateScore.Factory scoreFactory)
+        LevelStateAward.Factory awardFactory)
     {
         _gettingReadyFactory = gettingReadyFactory;
         _playingfactory = playingFactory;
-        _scoreFactory = scoreFactory;
+        _awardFactory = awardFactory;
     }
 
     public override State CreateState(int state)
@@ -35,9 +35,9 @@ public class LevelStateFactory : StateFactory
                 {
                     return _playingfactory.Create();
                 }
-            case (int)LevelStates.Score:
+            case (int)LevelStates.Award:
                 {
-                    return _scoreFactory.Create();
+                    return _awardFactory.Create();
                 }
 
             default:

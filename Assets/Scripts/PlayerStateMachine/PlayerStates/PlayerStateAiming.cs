@@ -38,7 +38,7 @@ public class PlayerStateAiming : State
 
     private void MouseClick()
     {
-        _playerStateMachine.ChageState((int)PlayerStates.Bullet);
+        _playerStateMachine.ChangeState((int)PlayerStates.Bullet);
     }
 
     [Serializable]
