@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI:
     Game:
-      PauseView:
+      PauseBaseView:
         AppearingDuration: 0.2
         DisappearingDuration: 0.1
+      AwardView:
+        ScoreTextDuration: 1
+        StarInitialScale: 3
+        DurationPerStar: 1
+        DurationBetweenStars: 1
+        StarInitialDistance: 1
   Player:
     Control:
       Sensitivity: 1
@@ -61,3 +67,4 @@ MonoBehaviour:
   TimeShifter:
     DefaultTimeScale: 1
     TimeShiftDuration: 0.25
+  ScoreList: {fileID: 11400000, guid: 88e743ec4386e4046a55a2092db6ac1e, type: 2}

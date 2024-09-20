@@ -33,6 +33,21 @@ public class SceneTransition : IInitializable
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
+    public bool TransitionToNextLevel()
+    {
+        int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextLevelIndex = currentBuildIndex + 1;
+
+        if (SceneManager.GetSceneByBuildIndex(currentBuildIndex + 1) != null)
+        {
+            TransitionToLevel(nextLevelIndex);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public void RestartScene() => TransitionToLevel(SceneManager.GetActiveScene().buildIndex);
 
     protected void SceneLoaded(Scene scene, LoadSceneMode mode)

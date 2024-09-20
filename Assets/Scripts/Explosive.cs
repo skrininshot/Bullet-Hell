@@ -7,10 +7,14 @@ public class Explosive : MonoBehaviour, IDamagable
 
     [SerializeField] private Explosion _explosion;
 
+    [SerializeField] private ScoreType _scoreType;
+
     public void Damage()
     {
         Explode();
     }
+
+    public ScoreType GetScoreType() => _scoreType;
 
     private void Explode()
     {

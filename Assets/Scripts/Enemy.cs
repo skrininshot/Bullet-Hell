@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IObjective
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private List<BodyPart> _bodyParts = new ();
@@ -10,6 +10,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _health = 1;
 
     private bool _isDead = false;
+
+    private ObjectiveTracker _objectiveTracker;
+
+    [Inject]
+    public void Construct(ObjectiveTracker objectiveTracker)
+    {
+        _objectiveTracker = objectiveTracker;
+        _objectiveTracker.AddObjective(this);
+    }
 
     private void OnValidate()
     {
@@ -44,5 +53,13 @@ public class Enemy : MonoBehaviour
     {
         _isDead = true;
         _animator.SetTrigger("Dead");
+
+        Complete();
+        enabled = false;
+    }
+
+    public void Complete()
+    {
+        _objectiveTracker.RemoveObjective(this);
     }
 }

@@ -43,7 +43,6 @@ public class PlayerStateBullet : State, IPausable
         _bullet.gameObject.SetActive(true);
 
         _bulletHitHandler.Initialize();
-        _bullet.OnHit.AddListener(OnBulletHit);
 
         _airFlowSpawner.Start();
 
@@ -65,8 +64,6 @@ public class PlayerStateBullet : State, IPausable
         _sequence.Play();
     }
 
-    private void OnBulletHit(GameObject obj) => _bulletHitHandler.HandleHit(obj);
-
     private void ReturnToAimingState() => 
         _playerStateMachine.ChangeState((int)PlayerStates.Aiming);
 
@@ -74,9 +71,10 @@ public class PlayerStateBullet : State, IPausable
     {
         _sequence.Kill();
 
-        _bullet.OnHit.RemoveListener(OnBulletHit);
         _bulletHitHandler.Dispose();
-        _bullet.gameObject.SetActive(false);
+
+        if (_bullet.gameObject.activeSelf)
+            _bullet.gameObject.SetActive(false);
 
         _airFlowSpawner.Stop();
 

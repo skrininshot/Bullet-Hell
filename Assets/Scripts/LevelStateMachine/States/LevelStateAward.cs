@@ -2,12 +2,10 @@
 
 public class LevelStateAward : State
 {
-    private readonly LevelStateMachine _levelStateMachine;
     private readonly AwardViewController _awardViewController;
 
-    public LevelStateAward(LevelStateMachine levelStateMachine, AwardViewController awardViewController)
+    public LevelStateAward(AwardViewController awardViewController)
     {
-        _levelStateMachine = levelStateMachine;
         _awardViewController = awardViewController;
     }
 

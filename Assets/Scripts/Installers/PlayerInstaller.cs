@@ -1,7 +1,5 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-using Zenject.SpaceFighter;
 
 public class PlayerInstaller : MonoInstaller
 {
@@ -40,6 +38,8 @@ public class PlayerInstaller : MonoInstaller
         Container.Bind<Bullet>().FromComponentInNewPrefab(_bulletPrefab).AsSingle();
 
         Container.Bind<BulletHitHandler>().AsSingle();
+
+        Container.Bind<BulletHitAnimationController>().AsSingle();
         Container.Bind<BulletHitAnimationFactory>().AsSingle();
         Container.BindFactory<BulletHitAnimationOnlyTimeShift, BulletHitAnimationOnlyTimeShift.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
         Container.BindFactory<BulletHitAnimationOrbit, BulletHitAnimationOrbit.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();

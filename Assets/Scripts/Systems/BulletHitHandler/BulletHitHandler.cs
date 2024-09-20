@@ -1,75 +1,48 @@
-using System;
 using UnityEngine;
 
 public class BulletHitHandler
 {
-    private PlayerStateMachine _playerStateMachine;
-    private BulletHitAnimationFactory _animationFactory;
-    private BulletHitAnimation _currentAnimation;
-
-    bool _returnToAimingStateAfterAnimation = false;
+    private readonly PlayerStateMachine _playerStateMachine;
+    private readonly BulletHitAnimationController _animationController;
+    private readonly LevelScoreRecorder _levelScoreRecorder;
+    private readonly Bullet _bullet;
 
     public BulletHitHandler(PlayerStateMachine playerStateMachine, 
-        BulletHitAnimationFactory animationFactory)
+        BulletHitAnimationController animator, LevelScoreRecorder levelScoreRecorder, 
+        Bullet bullet)
     {
         _playerStateMachine = playerStateMachine;
-        _animationFactory = animationFactory;
+        _animationController = animator;
+        _levelScoreRecorder = levelScoreRecorder;
+        _bullet = bullet;
     }
-    public void Initialize() => CreateNewAnimation();
 
-    public void Dispose() => DisposeCurrentAnimation();
+    public void Initialize()
+    {
+        _animationController.Initialize(ReturnToAimingState);
+        _bullet.OnHit.AddListener(HandleHit);
+    }
+
+    public void Dispose()
+    {
+        _animationController.Dispose();
+        _bullet.OnHit.RemoveListener(HandleHit);
+    }
 
     public void HandleHit(GameObject gameObject)
     {
         if (gameObject.TryGetComponent(out IDamagable damagable))
         {
             damagable.Damage();
-            PlayNewAnimation();
+            _levelScoreRecorder.AddToScore(damagable);
+            _animationController.PlayNewAnimation();
         }
         else
         {
-            if (_currentAnimation.IsActive)
-                _returnToAimingStateAfterAnimation = true;
-            else
-                ReturnToAimingState();  
+            _animationController.InvokeCompleteAction(); 
         }
     }
 
-    private void ReturnToAimingState() => _playerStateMachine.ChangeState((int)PlayerStates.Aiming);
-
-    private void PlayNewAnimation()
-    {
-        if (_currentAnimation.IsActive) return;
-
-        DisposeCurrentAnimation();
-
-        CreateNewAnimation();
-
-        _currentAnimation.Play();
-    }
-
-    private void CreateNewAnimation()
-    {
-        _currentAnimation =
-           _animationFactory.CreateAnimation((int)BulletHitAnimations.Orbit);
-
-        _currentAnimation.Create();
-        _currentAnimation.OnComplete += OnAnimationComplete; 
-    }
-
-    private void DisposeCurrentAnimation()
-    {
-        if (_currentAnimation == null) return;
-        
-        _currentAnimation?.Dispose();
-        _currentAnimation.OnComplete -= OnAnimationComplete;
-    }
-
-    private void OnAnimationComplete()
-    {
-        if (!_returnToAimingStateAfterAnimation) return;
-        
-        _returnToAimingStateAfterAnimation = false;
-        ReturnToAimingState();
-    }  
+    private void ReturnToAimingState() => 
+        _playerStateMachine.ChangeState((int)PlayerStates.Aiming);
 }

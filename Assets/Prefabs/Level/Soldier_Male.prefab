@@ -409,6 +409,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &2535904661731170111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3846321905847178959, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -453,6 +454,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &3053441019003158923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4337448931260039291, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -497,6 +499,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &3433895809712174086 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5046827966219815432, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -541,6 +544,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &3445363840201042660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5079547358140306666, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -585,6 +589,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &4731682600849400463 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2883457157017427073, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -629,6 +634,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &7195264392570178824 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 753508064312374022, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -673,6 +679,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 2
 --- !u!1 &7309096530351194975 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -772,6 +779,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 3
 --- !u!1 &7609074702504260650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 15362792215267876, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -816,6 +824,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &8429710312918506563 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7110601492764630451, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -860,6 +869,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &8633465180839675664 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7026051274928441058, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -904,6 +914,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!1 &8777359186268045975 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1180287166817139865, guid: 9922d10f7a2c49c40a535da40af6d6d1,
@@ -948,6 +959,7 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _scoreType: 1
 --- !u!4 &9008752493364107155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7733861530827789923, guid: 9922d10f7a2c49c40a535da40af6d6d1,

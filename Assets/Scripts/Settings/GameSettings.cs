@@ -9,6 +9,7 @@ public class GameSettings : ScriptableObject
     public CameraZoom.Settings CameraZoom;
     public BulletSettings Bullet;
     public TimeShifter.Settings TimeShifter;
+    public ScoreList ScoreList;
 
     [Serializable]
     public class PlayerSetttings
@@ -72,7 +73,7 @@ public class GameSettings : ScriptableObject
         public class GameUISettings
         {
             public PauseBaseView.BaseSettings PauseBaseView;
-            public PauseBaseView.BaseSettings AwardView;
+            public AwardView.Settings AwardView;
         }
     }
 }

@@ -9,13 +9,13 @@ public class PauseViewController : UIViewController<PauseView>, ITickable
 
     public override void Initialize()
     {
-        _pauseView.ContinueButton.onClick.AddListener(HandleContinueButton);
+        _view.ContinueButton.onClick.AddListener(HandleContinueButton);
         base.Initialize();
     }
 
     public override void Dispose()
     {
-        _pauseView.ContinueButton.onClick.RemoveListener(HandleContinueButton);
+        _view.ContinueButton.onClick.RemoveListener(HandleContinueButton);
         base.Dispose();
     }
 

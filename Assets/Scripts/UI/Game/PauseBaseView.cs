@@ -38,7 +38,7 @@ public class PauseBaseView : MonoBehaviour
         SetVisibility(false);
     }
 
-    public void SetVisibility(bool visible)
+    public virtual void SetVisibility(bool visible)
     {
         if (_changeVisibilityAnimation.IsActive())
             _changeVisibilityAnimation.Kill(true);
