@@ -15,10 +15,6 @@ This project is licensed under the **Attribution-NonCommercial-ShareAlike 4.0 In
 
 For more details on the license, please visit [Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-**Getting Started:**
-
-To get started with Bullet Hell, clone the repository and follow the setup instructions in the `INSTALL.md` file.
-
 **Contributing:**
 
 Contributions are welcome. Please submit a pull request or open an issue for suggestions or improvements.
