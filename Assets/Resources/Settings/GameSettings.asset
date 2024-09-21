@@ -20,9 +20,9 @@ MonoBehaviour:
       AwardView:
         ScoreTextDuration: 1
         StarInitialScale: 3
-        DurationPerStar: 1
-        DurationBetweenStars: 1
-        StarInitialDistance: 1
+        DurationPerStar: 0.5
+        DurationBetweenStars: 0.1
+        StarInitialDistance: 10
   Player:
     Control:
       Sensitivity: 1

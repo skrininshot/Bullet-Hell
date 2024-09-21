@@ -3,14 +3,14 @@ using UnityEngine.Events;
 
 public class BodyPart : MonoBehaviour, IDamagable
 {
-    public UnityEvent<BodyPart> OnHit = new();
+    public ScoreType ScoreType => _scoreType;
+
+    public UnityEvent<BodyPart> OnDamage = new();
 
     [SerializeField] private ScoreType _scoreType;
 
     public void Damage()
     {
-        OnHit?.Invoke(this);
+        OnDamage?.Invoke(this);
     }
-
-    public ScoreType GetScoreType() => _scoreType;
 }

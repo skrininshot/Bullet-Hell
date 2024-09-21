@@ -4,10 +4,11 @@ using Zenject;
 
 public class BulletHitAnimation : IPausable
 {
-    public bool IsActive => _sequence.IsActive();
+    public bool IsActive => _sequence != null && _sequence.IsActive();
     public Action OnComplete;
 
     protected Sequence _sequence;
+
     [Inject] private PauseSystem _pauseSystem;
 
     public virtual void Play() { }

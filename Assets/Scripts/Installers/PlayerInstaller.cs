@@ -37,9 +37,10 @@ public class PlayerInstaller : MonoInstaller
 
         Container.Bind<Bullet>().FromComponentInNewPrefab(_bulletPrefab).AsSingle();
 
+        Container.Bind<BulletController>().AsSingle();
         Container.Bind<BulletHitHandler>().AsSingle();
+        Container.Bind<BulletAnimationController>().AsSingle();
 
-        Container.Bind<BulletHitAnimationController>().AsSingle();
         Container.Bind<BulletHitAnimationFactory>().AsSingle();
         Container.BindFactory<BulletHitAnimationOnlyTimeShift, BulletHitAnimationOnlyTimeShift.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();
         Container.BindFactory<BulletHitAnimationOrbit, BulletHitAnimationOrbit.Factory>().WhenInjectedInto<BulletHitAnimationFactory>();

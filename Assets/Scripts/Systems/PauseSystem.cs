@@ -37,7 +37,12 @@ public class PauseSystem
     public void RegisterPausable(IPausable obj)
     {
         if (!_pausables.Contains(obj))
+        {
             _pausables.Add(obj);
+
+            if (IsPaused)
+                obj.Pause();
+        }  
     }
 
     public void UnregisterPausable(IPausable obj)

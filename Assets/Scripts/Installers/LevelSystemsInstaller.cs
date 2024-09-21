@@ -6,7 +6,6 @@ public class LevelSystemsInstaller : MonoInstaller
     {
         InstallTimeShifter();
         InstallPause();
-        InstallLevelScoreRecorder();
         InstallObjectiveTracker();
     }
 
@@ -20,11 +19,6 @@ public class LevelSystemsInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PauseSystem>().AsSingle();
     }
 
-    private void InstallLevelScoreRecorder()
-    {
-        Container.Bind<LevelScoreRecorder>().AsSingle();
-    } 
-    
     private void InstallObjectiveTracker()
     {
         Container.Bind<ObjectiveTracker>().AsSingle();

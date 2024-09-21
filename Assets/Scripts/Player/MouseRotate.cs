@@ -82,8 +82,6 @@ public class MouseRotate : MonoBehaviour, IPausable
             _rotationY = Mathf.Clamp(_rotationY, _minimumY, _maximumY);
 
          _transform.eulerAngles = new (_rotationX, _rotationY, 0);
-
-        Debug.Log(_transform.eulerAngles);
     }
 
     public void Pause()

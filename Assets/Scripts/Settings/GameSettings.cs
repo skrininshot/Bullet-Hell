@@ -20,7 +20,6 @@ public class GameSettings : ScriptableObject
         [Serializable]
         public class PlayerStatesSettings
         {
-            public PlayerStateBullet.Settings BulletState;
             public PlayerStateAiming.Settings AimingState;
         }
 
@@ -37,6 +36,8 @@ public class GameSettings : ScriptableObject
     {
         public float Speed = 50f;
 
+        public BulletController.Settings Controller;
+
         public HitSettings Hit;
 
         public AirFlowSettings AirFlow;
@@ -49,6 +50,7 @@ public class GameSettings : ScriptableObject
             [Serializable]
             public class AnimationsSettings
             {
+                public BulletAnimationController.Settings Controller;
                 public BulletHitAnimationOnlyTimeShift.Settings OnlyTimeShift;
                 public BulletHitAnimationOrbit.Settings Orbit;
             }

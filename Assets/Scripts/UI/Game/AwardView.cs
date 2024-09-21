@@ -21,16 +21,16 @@ public class AwardView : PauseBaseView
     [SerializeField] private Button _nextLevelButton;
 
     private Settings _settings;
-    private LevelScoreRecorder _levelScoreRecorder;
+    private ObjectiveTracker _objectiveTracker;
 
     private Sequence _sequence;
 
     [Inject]
-    private void Construct(GameSettings gameSettings, 
-        LevelScoreRecorder levelScoreRecorder)
+    private void Construct(GameSettings gameSettings,
+        ObjectiveTracker levelScoreRecorder)
     {
         _settings = gameSettings.UI.Game.AwardView;
-        _levelScoreRecorder = levelScoreRecorder;
+        _objectiveTracker = levelScoreRecorder;
     }
 
     public override void SetVisibility(bool visible)
@@ -45,8 +45,8 @@ public class AwardView : PauseBaseView
 
     private void CreateSequence()
     {
-        int totalScore = _levelScoreRecorder.TotalScore();
-        float objectiveScore = _levelScoreRecorder.GetObjectiveScore();
+        int totalScore = _objectiveTracker.CountTotalScore();
+        float objectiveScore = 1f;
         int scoreText = 0;
 
         HideStars();

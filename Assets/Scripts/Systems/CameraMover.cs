@@ -6,12 +6,11 @@ using System;
 public class CameraMover : IInitializable, IDisposable, IPausable
 {
     public Transform Transform { get; private set; }
+
     private readonly Camera _camera;
+    private readonly PauseSystem _pauseSystem;
 
-    private Tween _moving;
-    private Tween _rotation;
-
-    private PauseSystem _pauseSystem;
+    private Sequence _moving;
 
     public CameraMover(Camera camera, PauseSystem pauseSystem) 
     {
@@ -34,28 +33,26 @@ public class CameraMover : IInitializable, IDisposable, IPausable
     {
         if (_moving.IsActive())
             _moving.Pause();
-
-        if (_rotation.IsActive())
-            _rotation.Pause();
     }
 
     public void Resume()
     {
         if (_moving.IsActive())
             _moving.Play();
-
-        if (_rotation.IsActive())
-            _rotation.Play();
     }
 
-    public void SetTransform(Transform transform, float duration)
+    public Tween SetTransform(Transform transform, float duration)
     {
         Transform.SetParent(transform, true);
 
-        if (_moving.IsActive()) _moving.Kill();
-        _moving = Transform.DOLocalMove(Vector3.zero, duration);
+        if (_moving.IsActive())
+            _moving.Kill();
 
-        if (_rotation.IsActive()) _rotation.Kill();
-        _rotation = Transform.DOLocalRotate(Vector3.zero, duration);
+        _moving = DOTween.Sequence();
+        _moving.Append(Transform.DOLocalMove(Vector3.zero, duration));
+        _moving.Join(Transform.DOLocalRotate(Vector3.zero, duration));
+        _moving.Play();
+
+        return _moving;
     }
 }
