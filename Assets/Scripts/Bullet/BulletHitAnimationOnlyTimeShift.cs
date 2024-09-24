@@ -34,8 +34,8 @@ public class BulletHitAnimationOnlyTimeShift : BulletHitAnimation
     [Serializable]
     public class Settings
     {
-        public float TimeShiftValue = 0.01f;
-        public float TimeShiftDelay = 1f;
+        public float TimeShiftValue = 0.005f;
+        public float TimeShiftDelay = 0.5f;
     }
 
     public class Factory : PlaceholderFactory<BulletHitAnimationOnlyTimeShift> { }

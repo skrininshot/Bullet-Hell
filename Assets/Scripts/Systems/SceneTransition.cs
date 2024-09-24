@@ -3,6 +3,8 @@ using Zenject;
 
 public class SceneTransition : IInitializable
 {
+    private int _currentBuildIndex => SceneManager.GetActiveScene().buildIndex;
+    private int _nextLevelIndex => _currentBuildIndex + 1;
 
     private GameStateMachine _gameStateMachine;
     private GameStates _transitionNextState;
@@ -33,20 +35,14 @@ public class SceneTransition : IInitializable
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
-    public bool TransitionToNextLevel()
+    public void TransitionToNextLevel()
     {
-        int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextLevelIndex = currentBuildIndex + 1;
-
-        if (SceneManager.GetSceneByBuildIndex(currentBuildIndex + 1) != null)
-        {
-            TransitionToLevel(nextLevelIndex);
-
-            return true;
-        }
-
-        return false;
+        if (CanTransitionToNextLevel())
+            TransitionToLevel(_nextLevelIndex);
     }
+
+    public bool CanTransitionToNextLevel() 
+        => _nextLevelIndex < SceneManager.sceneCountInBuildSettings;
 
     public void RestartScene() => TransitionToLevel(SceneManager.GetActiveScene().buildIndex);
 

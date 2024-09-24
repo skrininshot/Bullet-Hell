@@ -10,7 +10,8 @@ public class CameraZoom : IInitializable
     private readonly Camera _camera;
     private float _defaultFOV;
 
-    public CameraZoom (GameSettings gameSettings, Camera camera)
+    public CameraZoom (GameSettings gameSettings, 
+        [Inject(Id = "MainCamera")] Camera camera)
     {
         _settings  = gameSettings.CameraZoom;
         _camera = camera;

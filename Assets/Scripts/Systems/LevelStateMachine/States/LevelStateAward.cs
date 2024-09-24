@@ -3,14 +3,18 @@
 public class LevelStateAward : State
 {
     private readonly AwardViewController _awardViewController;
+    private readonly PlayerStateMachine _playerStateMachine;
 
-    public LevelStateAward(AwardViewController awardViewController)
+    public LevelStateAward(AwardViewController awardViewController, 
+        PlayerStateMachine playerStateMachine)
     {
         _awardViewController = awardViewController;
+        _playerStateMachine = playerStateMachine;
     }
 
     public override void Start()
     {
+        _playerStateMachine.ChangeState((int)PlayerStates.Default);
         _awardViewController.Initialize();
     }
 

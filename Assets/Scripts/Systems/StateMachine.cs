@@ -18,6 +18,7 @@ public abstract class State : IDisposable
 
 public abstract class StateMachine : IInitializable, ITickable, IDisposable
 {
+    public Action<State> OnStateChange;
     public State CurrentState => _currentState;
     protected State _currentState;
     protected StateFactory _factory;
@@ -33,5 +34,6 @@ public abstract class StateMachine : IInitializable, ITickable, IDisposable
         _currentState?.Dispose();
         _currentState = _factory.CreateState(state);
         _currentState.Start();
+        OnStateChange?.Invoke(_currentState);
     }
 }

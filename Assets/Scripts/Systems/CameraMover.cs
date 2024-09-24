@@ -12,7 +12,8 @@ public class CameraMover : IInitializable, IDisposable, IPausable
 
     private Sequence _moving;
 
-    public CameraMover(Camera camera, PauseSystem pauseSystem) 
+    public CameraMover([Inject(Id = "MainCamera")] Camera camera, 
+        PauseSystem pauseSystem) 
     {
         _camera = camera;
         Transform = _camera.transform;

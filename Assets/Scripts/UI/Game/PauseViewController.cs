@@ -2,11 +2,13 @@
 
 public class PauseViewController : UIViewController<PauseView>
 {
-    private PlayerInput _playerInput;
+    protected readonly PauseSystem _pauseSystem;
+    private readonly PlayerInput _playerInput;
 
     public PauseViewController(SceneTransition sceneTransition, PlayerInput playerInput, PauseSystem pauseSystem, PauseView pauseView)
-        : base(sceneTransition, pauseSystem, pauseView)
+        : base(sceneTransition, pauseView)
     {
+        _pauseSystem = pauseSystem;
         _playerInput = playerInput;
     }
 
@@ -26,8 +28,11 @@ public class PauseViewController : UIViewController<PauseView>
 
     private void HandleContinueButton() => Show(false);
 
-    public void RevertPause(InputAction.CallbackContext context)
+    public void RevertPause(InputAction.CallbackContext context) => Show(!_pauseSystem.IsPaused);
+
+    public override void Show(bool value)
     {
-        Show(!_pauseSystem.IsPaused);
+        base.Show(value);
+        _pauseSystem.SetPause(value);
     }
 }

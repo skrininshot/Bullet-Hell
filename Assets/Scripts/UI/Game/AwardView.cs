@@ -25,6 +25,8 @@ public class AwardView : PauseBaseView
 
     private Sequence _sequence;
 
+    private bool _viewAnimationIsStarted = false;
+
     [Inject]
     private void Construct(GameSettings gameSettings,
         ObjectiveTracker levelScoreRecorder)
@@ -38,9 +40,20 @@ public class AwardView : PauseBaseView
         base.SetVisibility(visible);
 
         if (visible)
-            CreateSequence();
-        else
-            _sequence.Kill();
+        {
+            if (!_viewAnimationIsStarted)
+            {
+                CreateSequence();
+
+                _viewAnimationIsStarted = true;
+            }
+        }
+    }
+
+    protected override void OnDestroy()
+    {
+        _sequence = null;
+        _sequence.Kill();
     }
 
     private void CreateSequence()
@@ -76,8 +89,6 @@ public class AwardView : PauseBaseView
             _sequence.Join(_star3.rectTransform.DOLocalMove(_star3InitialPosition, _settings.DurationPerStar));
             _sequence.Join(_star3.DOFade(1f, _settings.DurationPerStar));
         }
-
-        _sequence.Play();
     }
 
     private void HideStars()
@@ -99,16 +110,16 @@ public class AwardView : PauseBaseView
 
         _star1.rectTransform.localPosition += Quaternion.Euler(0, 0, 45f) * Vector3.left * _settings.StarInitialDistance;
         _star2.rectTransform.localPosition += Vector3.down * _settings.StarInitialDistance;
-        _star3.rectTransform.localPosition += Quaternion.Euler(0, 0, 45f) * Vector3.right * _settings.StarInitialDistance;
+        _star3.rectTransform.localPosition += Quaternion.Euler(0, 0, 135f) * Vector3.left * _settings.StarInitialDistance;
     }
 
     [Serializable]
     public class Settings
     {
-        public float ScoreTextDuration = 1f;
-        public float StarInitialScale = 3f;
-        public float DurationPerStar = 1f;
-        public float DurationBetweenStars = 1f;
-        public float StarInitialDistance = 1f;
+        public float ScoreTextDuration = 0.5f;
+        public float StarInitialScale = 15f;
+        public float DurationPerStar = 0.25f;
+        public float DurationBetweenStars = 0f;
+        public float StarInitialDistance = 250f;
     }
 }

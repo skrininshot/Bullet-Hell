@@ -18,20 +18,16 @@ MonoBehaviour:
         AppearingDuration: 0.2
         DisappearingDuration: 0.1
       AwardView:
-        ScoreTextDuration: 1
-        StarInitialScale: 3
-        DurationPerStar: 0.5
-        DurationBetweenStars: 0.1
-        StarInitialDistance: 10
+        ScoreTextDuration: 0.5
+        StarInitialScale: 15
+        DurationPerStar: 0.25
+        DurationBetweenStars: 0
+        StarInitialDistance: 200
   Player:
     Control:
-      Sensitivity: 1
+      Sensitivity: 0.15
       AimSensitivity: 0.5
     States:
-      BulletState:
-        CameraMoveToBulletSpeed: 0.5
-        TimeShiftValue: 0.05
-        BulletLifeTime: 0.5
       AimingState:
         CameraMoveToAimingSpeed: 0.2
   CameraZoom:
@@ -40,8 +36,14 @@ MonoBehaviour:
     ZoomSizeValue: 0.5
   Bullet:
     Speed: 75
+    Controller:
+      CameraMoveToBulletSpeed: 0.5
+      TimeShiftValue: 0.05
+      BulletLifeTime: 0.5
     Hit:
       Animations:
+        Controller:
+          CameraMoveToBulletSpeed: 0.5
         OnlyTimeShift:
           TimeShiftValue: 0.005
           TimeShiftDelay: 0.5

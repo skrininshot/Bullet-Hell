@@ -61,14 +61,14 @@ public class AirFlowEffect : MonoBehaviour, IPoolable<Vector3, Vector3, AirFlowE
     {
         [Header("Scale up")]
         public Vector3 TargetScale = new (0.25f, 0.25f, 0.1f);
-        public float ScaleUpDuration = 0.5f;
+        public float ScaleUpDuration = 0.025f;
         public Ease ScaleUpEase = Ease.OutQuint;
 
         [Header("Life time")]
-        public float LifeTime = 1f;
+        public float LifeTime = 0.025f;
 
         [Header("Scale down")]
-        public float ScaleDownDuration = 0.5f;
+        public float ScaleDownDuration = 0.025f;
         public Ease ScaleDownEase = Ease.InOutQuad;
     }
 

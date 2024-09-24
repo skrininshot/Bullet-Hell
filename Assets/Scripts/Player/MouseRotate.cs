@@ -47,7 +47,7 @@ public class MouseRotate : MonoBehaviour, IPausable
         _pauseSystem.RegisterPausable(this);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         _pauseSystem.UnregisterPausable(this);
     }

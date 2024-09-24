@@ -1,8 +1,13 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 public class MouseAiming : MouseRotate
 {
+    public Transform BulletSpawnPoint => _bulletSpawnPoint;
+
+    [SerializeField] private Transform _bulletSpawnPoint;
+
     private CameraZoom _camera;
 
     [Inject]

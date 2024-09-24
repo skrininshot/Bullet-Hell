@@ -10,7 +10,7 @@ public class PlayerStateAiming : State
     private readonly AimingView _aimingView;
     private readonly CameraMover _cameraMover;
 
-    private PlayerInput _playerInput;
+    private readonly PlayerInput _playerInput;
 
     public PlayerStateAiming (GameSettings settings, PlayerStateMachine playerStateMachine, 
         PlayerInput playerInput, CameraMover cameraMover, 
@@ -27,18 +27,19 @@ public class PlayerStateAiming : State
     public override void Start()
     {
         _aimingView.gameObject.SetActive(true);
-        _mouseAiming.gameObject.SetActive(true);
+        _mouseAiming.enabled = true;
+
         _cameraMover.SetTransform(_mouseAiming.transform, _settings.CameraMoveToAimingSpeed);
 
-        _playerInput.PC.Shoot.performed += ChangeStateToBullet;
+        _playerInput.PC.Shoot.started += ChangeStateToBullet;
     }
 
     public override void Dispose()
     {
         _aimingView.gameObject.SetActive(false);
-        _mouseAiming.gameObject.SetActive(false);
+        _mouseAiming.enabled = false;
 
-        _playerInput.PC.Shoot.performed -= ChangeStateToBullet;
+        _playerInput.PC.Shoot.started -= ChangeStateToBullet;
     }
 
     private void ChangeStateToBullet(InputAction.CallbackContext context)
@@ -49,7 +50,7 @@ public class PlayerStateAiming : State
     [Serializable]
     public class Settings
     {
-        public float CameraMoveToAimingSpeed = 0.1f;
+        public float CameraMoveToAimingSpeed = 0.2f;
     }
 
     public class Factory : PlaceholderFactory<PlayerStateAiming> { }

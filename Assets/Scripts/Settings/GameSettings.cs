@@ -21,13 +21,12 @@ public class GameSettings : ScriptableObject
         public class PlayerStatesSettings
         {
             public PlayerStateAiming.Settings AimingState;
-            public PlayerStateDefault.Settings DefaultState;
         }
 
         [Serializable]
         public class ControlSettings
         {
-            public float Sensitivity = 1f;
+            public float Sensitivity = 0.15f;
             public float AimSensitivity = 0.5f;
         }
     }
@@ -35,7 +34,7 @@ public class GameSettings : ScriptableObject
     [Serializable]
     public class BulletSettings
     {
-        public float Speed = 50f;
+        public float Speed = 75f;
 
         public BulletController.Settings Controller;
 

@@ -21,7 +21,7 @@ public class BulletHitAnimationOrbit : BulletHitAnimation, IPausable
         float segmentDuration = _settings.Duration / _settings.OrbitSegments;
         float segmentHeight = (_settings.OrbitRadius * 2f) / _settings.OrbitSegments;
         float segmentAngle = (360f / _settings.OrbitSegments);
-        Vector3 originalPosition = _cameraMover.Transform.localPosition;
+        Vector3 originalPosition = Vector3.zero;
 
         _sequence.AppendCallback(() => _timeShifter.RegisterUser(this, _settings.TimeScale));
 
@@ -74,13 +74,13 @@ public class BulletHitAnimationOrbit : BulletHitAnimation, IPausable
     public class Settings
     {
         [Range(0f, 1f)] 
-        public float Height = 0.5f;
-        public float OrbitRadius = 0.1f;
-        public int OrbitSegments = 36;
-        public float EnterDuration = 0.1f;
-        public float Duration = 2f;
-        public float ExitDuration = 0.1f;
-        public float TimeScale = 0.01f;
+        public float Height = 1f;
+        public float OrbitRadius = 0.125f;
+        public int OrbitSegments = 3;
+        public float EnterDuration = 1f;
+        public float Duration = 3f;
+        public float ExitDuration = 1f;
+        public float TimeScale = 0.005f;
     }
 
     public class Factory : PlaceholderFactory<BulletHitAnimationOrbit> { }
