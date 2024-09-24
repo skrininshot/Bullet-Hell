@@ -4,9 +4,4 @@ public class PlayerStateMachine : StateMachine
     {
         _factory = factory;
     }
-
-    public override void Initialize()
-    {
-        ChangeState((int)PlayerStates.Aiming);
-    }
 }

@@ -1,11 +1,8 @@
-using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class MouseAiming : MouseRotate
 {
-    [HideInInspector] public UnityEvent OnClick = new();
-
     private CameraZoom _camera;
 
     [Inject]
@@ -14,36 +11,31 @@ public class MouseAiming : MouseRotate
         _camera = cameraZoom;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _playerInput.PC.Zoom.performed += Zoom;
+    }
+
     private void OnDisable()
     {
+        _playerInput.PC.Zoom.performed -= Zoom;
+
         if (_camera.IsZoomed)
             _camera.ZoomOut();
     }
 
     protected override void Update()
     {
-        HandleMouseButtons();
         RotationInput(_controlSettings.Sensitivity * _controlSettings.AimSensitivity);
     }
 
-    private void HandleMouseButtons()
+    private void Zoom(InputAction.CallbackContext context)
     {
-        if (_isPaused) return;
-        
-        bool lmbClicked = Input.GetMouseButtonDown(0);
-        bool rmbClicked = Input.GetMouseButton(1);
+        if (context.started)
+            _camera.ZoomIn();
 
-        if (lmbClicked)
-        {
-            OnClick?.Invoke();
-
-            return;
-        }
-
-        if (_camera.IsZoomed != rmbClicked)
-            if (rmbClicked)
-                _camera.ZoomIn();
-            else
-                _camera.ZoomOut();
+        if (context.canceled)
+            _camera.ZoomOut();
     }
 }

@@ -59,7 +59,7 @@ public class BulletController
         _bulletHitHandler.Dispose();
         _animationController.Dispose();
 
-        if (_bullet.gameObject.activeSelf)
+        if (_bullet.gameObject != null)
             _bullet.gameObject.SetActive(false);
 
         _airFlowSpawner.Stop();

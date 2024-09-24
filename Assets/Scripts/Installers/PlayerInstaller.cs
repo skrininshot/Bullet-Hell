@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class PlayerInstaller : MonoInstaller
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private MouseAiming _mouseAiming;
+    [SerializeField] private Transform _cameraDefaultPoint;
 
     [Header("Bullet")]
     [SerializeField] private Bullet _bulletPrefab;
@@ -13,10 +15,17 @@ public class PlayerInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        InstallInput();
         InstallCamera();
         InstallMouseAiming();
         InstallBullet();
         InstallPlayerStateMachine();
+    }
+
+    private void InstallInput()
+    {
+        Container.BindInstance(new PlayerInput()).AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerInputInitializer>().AsSingle();
     }
 
     private void InstallCamera()
@@ -24,6 +33,8 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(_camera).WithId("MainCamera").AsSingle();
         Container.BindInterfacesAndSelfTo<CameraZoom>().AsSingle().WithArguments(_camera);
         Container.BindInterfacesAndSelfTo<CameraMover>().AsSingle().WithArguments(_camera);
+
+        Container.Bind<Transform>().WithId("CameraDefaultPoint").FromInstance(_bulletSpawnPoint);
     }
 
     private void InstallMouseAiming()
@@ -33,7 +44,7 @@ public class PlayerInstaller : MonoInstaller
 
     private void InstallBullet()
     {
-        Container.BindInstance(_bulletSpawnPoint).WithId("BulletSpawnPoint").AsSingle();
+        Container.Bind<Transform>().WithId("BulletSpawnPoint").FromInstance(_bulletSpawnPoint);
 
         Container.Bind<Bullet>().FromComponentInNewPrefab(_bulletPrefab).AsSingle();
 
@@ -60,6 +71,7 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PlayerStateMachine>().AsSingle();
         Container.BindFactory<PlayerStateAiming, PlayerStateAiming.Factory>().WhenInjectedInto<PlayerStateFactory>();
         Container.BindFactory<PlayerStateBullet, PlayerStateBullet.Factory>().WhenInjectedInto<PlayerStateFactory>();
+        Container.BindFactory<PlayerStateDefault, PlayerStateDefault.Factory>().WhenInjectedInto<PlayerStateFactory>();
     }
 
     public class  AirFlowEffectPool : MonoPoolableMemoryPool<Vector3, Vector3, AirFlowEffect.Settings, float, IMemoryPool, AirFlowEffect> { }

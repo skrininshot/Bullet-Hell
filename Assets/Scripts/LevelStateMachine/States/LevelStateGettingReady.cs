@@ -2,7 +2,7 @@
 
 public class LevelStateGettingReady : State
 {
-    private LevelStateMachine _levelStateMachine;
+    private readonly LevelStateMachine _levelStateMachine;
 
     public LevelStateGettingReady (LevelStateMachine levelStateMachine)
     {

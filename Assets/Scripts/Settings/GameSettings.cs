@@ -21,6 +21,7 @@ public class GameSettings : ScriptableObject
         public class PlayerStatesSettings
         {
             public PlayerStateAiming.Settings AimingState;
+            public PlayerStateDefault.Settings DefaultState;
         }
 
         [Serializable]

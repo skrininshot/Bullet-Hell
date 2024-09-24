@@ -1,19 +1,24 @@
 using System;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class PlayerStateAiming : State
 {
-    private Settings _settings;
-    private PlayerStateMachine _playerStateMachine;
-    private MouseAiming _mouseAiming;
-    private AimingView _aimingView;
-    private CameraMover _cameraMover;
+    private readonly Settings _settings;
+    private readonly PlayerStateMachine _playerStateMachine;
+    private readonly MouseAiming _mouseAiming;
+    private readonly AimingView _aimingView;
+    private readonly CameraMover _cameraMover;
+
+    private PlayerInput _playerInput;
 
     public PlayerStateAiming (GameSettings settings, PlayerStateMachine playerStateMachine, 
-        CameraMover cameraMover, MouseAiming mouseAiming, AimingView aimingUI)
+        PlayerInput playerInput, CameraMover cameraMover, 
+        MouseAiming mouseAiming, AimingView aimingUI)
     {
         _settings = settings.Player.States.AimingState;
         _playerStateMachine = playerStateMachine;
+        _playerInput = playerInput;
         _cameraMover = cameraMover;
         _mouseAiming = mouseAiming;
         _aimingView = aimingUI;
@@ -25,7 +30,7 @@ public class PlayerStateAiming : State
         _mouseAiming.gameObject.SetActive(true);
         _cameraMover.SetTransform(_mouseAiming.transform, _settings.CameraMoveToAimingSpeed);
 
-        _mouseAiming.OnClick.AddListener(MouseClick);
+        _playerInput.PC.Shoot.performed += ChangeStateToBullet;
     }
 
     public override void Dispose()
@@ -33,10 +38,10 @@ public class PlayerStateAiming : State
         _aimingView.gameObject.SetActive(false);
         _mouseAiming.gameObject.SetActive(false);
 
-        _mouseAiming.OnClick.RemoveListener(MouseClick);
+        _playerInput.PC.Shoot.performed -= ChangeStateToBullet;
     }
 
-    private void MouseClick()
+    private void ChangeStateToBullet(InputAction.CallbackContext context)
     {
         _playerStateMachine.ChangeState((int)PlayerStates.Bullet);
     }

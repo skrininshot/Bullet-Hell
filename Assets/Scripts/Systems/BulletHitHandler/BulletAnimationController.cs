@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 
-public class BulletAnimationController : IPausable
+public class BulletAnimationController
 {
     public bool AnimationIsPlaying => _currentAnimation != null && _currentAnimation.IsActive;
     public Action OnAnimationComplete;
@@ -28,8 +28,6 @@ public class BulletAnimationController : IPausable
     public void Initialize()
     {
         CameraMoveToBullet();
-
-        _pauseSystem.RegisterPausable(this);
     }
 
     public void Dispose()
@@ -38,20 +36,6 @@ public class BulletAnimationController : IPausable
         _currentAnimation = null;
         _movingToBullet.Kill();
         _movingToBullet = null;
-
-        _pauseSystem.UnregisterPausable(this);
-    }
-
-    public void Pause()
-    {
-        if (_movingToBullet.IsActive())
-            _movingToBullet.Pause();
-    }
-
-    public void Resume()
-    {
-        if (_movingToBullet.IsActive())
-            _movingToBullet.Play();
     }
 
     private Tween CameraMoveToBullet() =>

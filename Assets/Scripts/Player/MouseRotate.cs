@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using NaughtyAttributes;
 using Zenject;
+using UnityEngine.InputSystem;
 
 public class MouseRotate : MonoBehaviour, IPausable
 {
@@ -12,6 +13,7 @@ public class MouseRotate : MonoBehaviour, IPausable
     [ShowIf(nameof(_clampY))][SerializeField] private float _minimumY = -60f;
     [ShowIf(nameof(_clampY))][SerializeField] private float _maximumY = 60f;
 
+    protected PlayerInput _playerInput;
     private Transform _transform;
 
     private float _rotationX = 0f;
@@ -25,9 +27,10 @@ public class MouseRotate : MonoBehaviour, IPausable
     protected bool _isPaused;
 
     [Inject]
-    private void Construct(GameSettings gameSettings, PauseSystem pauseSystem)
+    private void Construct(GameSettings gameSettings, PlayerInput playerInput, PauseSystem pauseSystem)
     {
         _controlSettings = gameSettings.Player.Control;
+        _playerInput = playerInput;
         _pauseSystem = pauseSystem;
     }
 
@@ -36,7 +39,7 @@ public class MouseRotate : MonoBehaviour, IPausable
         _transform = transform;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _rotationX = _transform.eulerAngles.x;
         _rotationY = _transform.eulerAngles.y;
@@ -57,8 +60,12 @@ public class MouseRotate : MonoBehaviour, IPausable
     {
         if (_isPaused) return;
 
-        _mouseX = Input.GetAxis("Mouse X") * sensitivity;
-        _mouseY = Input.GetAxis("Mouse Y") * sensitivity;
+        Vector2 mouseDeltaInput = _playerInput.PC.Point.ReadValue<Vector2>();
+
+        if (mouseDeltaInput == null) return;
+
+        _mouseX = mouseDeltaInput.x * sensitivity;
+        _mouseY = mouseDeltaInput.y * sensitivity;
     }
 
     private void Rotate()
