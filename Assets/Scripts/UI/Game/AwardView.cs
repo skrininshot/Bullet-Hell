@@ -52,6 +52,8 @@ public class AwardView : PauseBaseView
 
     protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         _sequence = null;
         _sequence.Kill();
     }

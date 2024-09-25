@@ -88,11 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9025877eb2ebb4783fc1877c738f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
-  _mouseAiming: {fileID: 0}
   _bulletPrefab: {fileID: 5805783370738170983, guid: 7af64eeecf5fb814e8a31075afd1e3c2,
     type: 3}
-  _bulletSpawnPoint: {fileID: 0}
   _airFlowEffectPrefab: {fileID: 3959720492720079647, guid: c28b46660236f1c44b3ce8798cf42b67,
     type: 3}
 --- !u!1 &4039970431625147810
@@ -362,6 +359,10 @@ MonoBehaviour:
   _aimingView: {fileID: 5470230996261650079}
   _pauseView: {fileID: 1822501421204359337}
   _awardView: {fileID: 7875074143307704851}
+  _floatingTextPrefab: {fileID: -868288858219064757, guid: be17a229c9b8ec14db93bd17554fddf2,
+    type: 3}
+  _floatingTextCanvasPrefab: {fileID: 3249712900902466760, guid: 9ba16bf14cac6774ab89ef30349b4649,
+    type: 3}
 --- !u!1001 &2677445227919826781
 PrefabInstance:
   m_ObjectHideFlags: 0

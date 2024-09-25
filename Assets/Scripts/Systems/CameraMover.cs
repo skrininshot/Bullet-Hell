@@ -28,6 +28,9 @@ public class CameraMover : IInitializable, IDisposable, IPausable
     public void Dispose()
     {
         _pauseSystem.UnregisterPausable(this);
+
+        _moving.Kill(true);
+        _moving = null;
     }
 
     public void Pause()
@@ -52,7 +55,7 @@ public class CameraMover : IInitializable, IDisposable, IPausable
         _moving = DOTween.Sequence();
         _moving.Append(Transform.DOLocalMove(Vector3.zero, duration));
         _moving.Join(Transform.DOLocalRotate(Vector3.zero, duration));
-        _moving.Play();
+        _moving.OnComplete(() => Transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(Vector3.zero)));
 
         return _moving;
     }

@@ -1,22 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
-public class Enemy : MonoBehaviour, IObjective, IScorable
+public class Enemy : LevelObjective
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private List<BodyPart> _bodyParts = new ();
+    [SerializeField] private List<BodyPart> _bodyParts = new();
+    [SerializeField] private DictionaryBodyPartScore _bodyPartScore = new () 
+    { 
+        new KeyValuePair<BodyPartType, int>(BodyPartType.Head, 100),
+        new KeyValuePair<BodyPartType, int>(BodyPartType.Torso, 50),
+        new KeyValuePair<BodyPartType, int>(BodyPartType.Arm, 25),
+        new KeyValuePair<BodyPartType, int>(BodyPartType.Leg, 25)
+    };
 
     private BodyPart _damagedBodyPart;
-
-    private ObjectiveTracker _objectiveTracker;
-
-    [Inject]
-    public void Construct(ObjectiveTracker objectiveTracker)
-    {
-        _objectiveTracker = objectiveTracker;
-        _objectiveTracker.AddObjective(this);
-    }
 
     private void OnValidate()
     {
@@ -38,23 +36,27 @@ public class Enemy : MonoBehaviour, IObjective, IScorable
     private void OnDamage(BodyPart bodyPart)
     {
         _damagedBodyPart = bodyPart;
-
         Dead();
     }
 
     private void Dead()
     {
-        _animator.SetTrigger("Dead");
-
         Complete();
+
+        _animator.SetTrigger("Dead");
         enabled = false;
     }
 
-    public void Complete()
+    protected override void Complete()
     {
-        _objectiveTracker.CompleteObjective(this);
+        _score += _bodyPartScore[_damagedBodyPart.BodyPartType];
+
+        base.Complete();
     }
 
-    public ScoreType GetScoreType() => 
-        _damagedBodyPart == null ? ScoreType.Default : _damagedBodyPart.ScoreType;
+    [Serializable]
+    public class DictionaryBodyPartScore : SerializableDictionary<BodyPartType, int>
+    {
+
+    }
 }

@@ -14,8 +14,7 @@ public class AirFlowEffectSpawner : IInitializable, IDisposable, IPausable
 
     private Sequence _sequence;
 
-    [Inject]
-    private void Construct(GameSettings gameSettings, PauseSystem pauseSystem,
+    public AirFlowEffectSpawner(GameSettings gameSettings, PauseSystem pauseSystem,
         AirFlowEffect.Factory factory, Bullet bullet)
     {
         _settings = gameSettings.Bullet;

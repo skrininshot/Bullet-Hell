@@ -3,14 +3,19 @@ using UnityEngine.Events;
 
 public class BodyPart : MonoBehaviour, IDamagable
 {
-    public ScoreType ScoreType => _scoreType;
+    public BodyPartType BodyPartType => _bodyPartType;
 
     public UnityEvent<BodyPart> OnDamage = new();
 
-    [SerializeField] private ScoreType _scoreType;
+    [SerializeField] private BodyPartType _bodyPartType;
 
-    public void Damage()
-    {
-        OnDamage?.Invoke(this);
-    }
+    public void Damage() => OnDamage?.Invoke(this);
+}
+
+public enum BodyPartType
+{
+    Head,
+    Torso,
+    Arm,
+    Leg
 }

@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using System;
 using UnityEngine;
-using Zenject;
 
 public class BulletController
 {
@@ -9,6 +8,7 @@ public class BulletController
     private readonly Bullet _bullet;
     private readonly MouseAiming _mouseAiming;
     private readonly BulletAnimationController _animationController;
+    private readonly FloatingTextSpawner _floatingTextSpawner;
     
     private readonly Settings _settings;
     private readonly PlayerStateMachine _playerStateMachine;
@@ -22,6 +22,7 @@ public class BulletController
         Bullet bullet,
         MouseAiming mouseAiming,
         BulletAnimationController animationController,
+        FloatingTextSpawner floatingTextSpawner,
         GameSettings settings,
         PlayerStateMachine playerStateMachine)
     {
@@ -30,7 +31,8 @@ public class BulletController
         _bullet.gameObject.SetActive(false);
         _mouseAiming = mouseAiming;
         _animationController = animationController;
-        
+        _floatingTextSpawner = floatingTextSpawner;
+
         _settings = settings.Bullet.Controller;
         _playerStateMachine = playerStateMachine;
     }

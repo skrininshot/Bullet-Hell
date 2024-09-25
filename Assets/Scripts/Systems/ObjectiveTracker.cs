@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using Zenject;
 
 public class ObjectiveTracker
 {
     public Action OnObjectivesComplete;
 
-    private readonly List<IObjective> _completedObjectives = new();
-    private readonly List<IObjective> _totalObjectives = new();
-    private readonly List<IObjective> _objectives = new();
+    private readonly List<LevelObjective> _completedObjectives = new();
+    private readonly List<LevelObjective> _totalObjectives = new();
+    private readonly List<LevelObjective> _objectives = new();
 
-    private readonly ScoreList _scoreList;
+    private readonly FloatingTextSpawner _floatingTextSpawner;
 
-    public ObjectiveTracker(GameSettings gameSettings) =>
-        _scoreList = gameSettings.ScoreList;
-
-    public void AddObjective(IObjective objective)
+    public ObjectiveTracker(
+        FloatingTextSpawner floatTextSpawner)
     {
-        if (_objectives.Contains(objective)) return;
-
-        _objectives.Add(objective);
-        _totalObjectives.Add(objective);
+        _floatingTextSpawner = floatTextSpawner;
     }
-
-    public void CompleteObjective(IObjective objective) 
+        
+    public void ObjectiveComplete(LevelObjective objective)
     {
         if (!_objectives.Contains(objective) || _completedObjectives.Contains(objective)) return;
 
         _objectives.Remove(objective);
         _completedObjectives.Add(objective);
 
+        _floatingTextSpawner.Spawn(objective.transform.position, objective.Score.ToString());
         OnObjectiveRemove();
+    }
+
+    public void AddObjective(LevelObjective objective)
+    {
+        if (_objectives.Contains(objective)) return;
+
+        _objectives.Add(objective);
+        _totalObjectives.Add(objective);
     }
 
     private void OnObjectiveRemove()
@@ -51,15 +56,12 @@ public class ObjectiveTracker
 
     public int CountBestPossibleScore() => CountScore(_totalObjectives);
 
-    private int CountScore(List<IObjective> objectiveList)
+    private int CountScore(List<LevelObjective> objectiveList)
     {
         int score = 0;
 
         foreach (var objective in objectiveList)
-        {
-            if (objective is IScorable scorable)
-                score += _scoreList.ScoreTypeDictionary[scorable.GetScoreType()];
-        }
+            score += objective.Score;
 
         return score;
     }
