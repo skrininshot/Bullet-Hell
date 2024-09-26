@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Zenject;
+using UnityEngine;
 
 public class ObjectiveTracker
 {
     public Action OnObjectivesComplete;
 
-    private readonly List<LevelObjective> _completedObjectives = new();
-    private readonly List<LevelObjective> _totalObjectives = new();
-    private readonly List<LevelObjective> _objectives = new();
+    private readonly List<ObjectiveScore> _completedObjectives = new();
+    private readonly List<ObjectiveScore> _totalObjectives = new();
+    private readonly List<ObjectiveScore> _objectives = new();
 
     private readonly FloatingTextSpawner _floatingTextSpawner;
 
@@ -18,18 +18,17 @@ public class ObjectiveTracker
         _floatingTextSpawner = floatTextSpawner;
     }
         
-    public void ObjectiveComplete(LevelObjective objective)
+    public void ObjectiveComplete(ObjectiveScore objective)
     {
         if (!_objectives.Contains(objective) || _completedObjectives.Contains(objective)) return;
 
         _objectives.Remove(objective);
         _completedObjectives.Add(objective);
 
-        _floatingTextSpawner.Spawn(objective.transform.position, objective.Score.ToString());
         OnObjectiveRemove();
     }
 
-    public void AddObjective(LevelObjective objective)
+    public void AddObjective(ObjectiveScore objective)
     {
         if (_objectives.Contains(objective)) return;
 
@@ -46,23 +45,41 @@ public class ObjectiveTracker
     private bool HasEnemies()
     {
         foreach (var objective in _objectives)
-            if (objective is Enemy)
+            if (objective.Type == ObjectiveType.Enemy)
                 return true;
 
         return false;
     }
 
-    public int CountTotalScore() => CountScore(_completedObjectives);
-
-    public int CountBestPossibleScore() => CountScore(_totalObjectives);
-
-    private int CountScore(List<LevelObjective> objectiveList)
+    public int CountTotalScore()
     {
         int score = 0;
 
-        foreach (var objective in objectiveList)
+        foreach (var objective in _completedObjectives)
             score += objective.Score;
 
         return score;
     }
+}
+
+public interface IObjective { }
+
+public enum ObjectiveType
+{
+    Default,
+    Prop,
+    Explosive,
+    Enemy
+}
+
+[Serializable]
+public class ObjectiveScore
+{
+    public ObjectiveType Type => _type;
+    public int Score => _score;
+
+    [SerializeField] private ObjectiveType _type;
+    [SerializeField] private int _score;
+
+    public void SetScore(int value) => _score = value;
 }

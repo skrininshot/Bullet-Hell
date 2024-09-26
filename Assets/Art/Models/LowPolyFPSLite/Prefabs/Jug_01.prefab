@@ -146,8 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8883fa929a0d20a41938a5e69369931d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectiveType: 0
-  _score: 15
+  _objective:
+    _type: 2
+    _score: 25
   _expolsionForce: 2000
   _expolsionRadius: 5
   _explosion: {fileID: 8947306651364551645, guid: 5d481083fa310c1498db94b4801521ae,

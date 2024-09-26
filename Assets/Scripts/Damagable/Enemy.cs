@@ -1,10 +1,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class Enemy : LevelObjective
+public class Enemy : MonoBehaviour, IObjective
 {
+    [Inject] private ObjectiveTracker _objectiveTracker;
+
+    [SerializeField] private ObjectiveScore _objective;
+
     [SerializeField] private Animator _animator;
+    [SerializeField] private string _startAnimation;
+
     [SerializeField] private List<BodyPart> _bodyParts = new();
     [SerializeField] private DictionaryBodyPartScore _bodyPartScore = new () 
     { 
@@ -21,13 +28,21 @@ public class Enemy : LevelObjective
         _bodyParts = FindComponentRecursive<BodyPart>.FindBodyParts(transform);
     }
 
-    void OnEnable()
+    private void Start()
+    {
+        _objectiveTracker.AddObjective(_objective);
+
+        if (!string.IsNullOrEmpty(_startAnimation))
+            _animator.SetTrigger(_startAnimation);
+    }
+
+    private void OnEnable()
     {
         foreach (var bodyPart in _bodyParts)
             bodyPart.OnDamage.AddListener(OnDamage);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         foreach (var bodyPart in _bodyParts)
             bodyPart.OnDamage.RemoveListener(OnDamage);
@@ -36,22 +51,23 @@ public class Enemy : LevelObjective
     private void OnDamage(BodyPart bodyPart)
     {
         _damagedBodyPart = bodyPart;
+
         Dead();
     }
 
     private void Dead()
     {
-        Complete();
-
         _animator.SetTrigger("Dead");
+
+        if (_objectiveTracker != null)
+        {
+            int score = _bodyPartScore[_damagedBodyPart.BodyPartType];
+
+            _objective.SetScore(_objective.Score + score);
+            _objectiveTracker.ObjectiveComplete(_objective);
+        } 
+
         enabled = false;
-    }
-
-    protected override void Complete()
-    {
-        _score += _bodyPartScore[_damagedBodyPart.BodyPartType];
-
-        base.Complete();
     }
 
     [Serializable]

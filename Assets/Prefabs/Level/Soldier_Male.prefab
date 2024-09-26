@@ -719,8 +719,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57587b92160dee347aba0b3c775abe6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectiveType: 1
-  _score: 100
+  _objective:
+    _type: 3
+    _score: 100
   _animator: {fileID: 407597247597712942}
   _bodyParts:
   - {fileID: 5143797441384189874}
