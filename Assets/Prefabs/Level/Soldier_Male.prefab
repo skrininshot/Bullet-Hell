@@ -165,7 +165,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9922d10f7a2c49c40a535da40af6d6d1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9922d10f7a2c49c40a535da40af6d6d1,
         type: 3}
@@ -723,6 +723,7 @@ MonoBehaviour:
     _type: 3
     _score: 100
   _animator: {fileID: 407597247597712942}
+  _startAnimation: 
   _bodyParts:
   - {fileID: 5143797441384189874}
   - {fileID: 3047712345468086145}
