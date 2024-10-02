@@ -89,7 +89,7 @@ public class BulletController
 
     private void Despawn()
     {
-        if (_bullet.gameObject != null)
+        if (_bullet != null && _bullet.gameObject != null)
             _bullet.gameObject.SetActive(false);
     }
 
